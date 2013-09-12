@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="./omero.png" type="Source">
+	<name>OMERO Reader</name>
+
+	<shortDescription>
+		Experimental node that reads images from an OMERO
+		database. 
+    </shortDescription>
+
+	<fullDescription>
+		<intro>This (experimental) reader uses OMEREO.insight to access images
+			from OMERO databases.
+			In the configuration phase the insight viewer is used as graphical
+			interface
+			to select image IDs from the database. During the node execution the
+			images
+			are loaded from the database and get converted into an appropriate
+			ImgLib format.
+		</intro>
+
+		<tab name="user credentials">
+			<option name="Server">The address of the OMERO server.</option>
+			<option name="Port">A port that can be used to connect with
+				OMERO.insight to the
+				server (standard value 4064).</option>
+			<option name="Connection">The speed of your server connection LAN, High
+				(Broadband) or Low (Dial-up)</option>
+			<option name="Username">The username, that you use to access the server
+				with OMERO.insight</option>
+			<option name="Password">The password, that you use to access the server
+				with OMERO.insight</option>
+		</tab>
+
+		<tab name="image selection">
+			<option name="Selection">
+				<ul>
+					<li>Fill in the user credentials form.</li>
+					<li>Start OMERO.insight by clicking onto the start button.</li>
+					<li>Browse the database and select images with your mouse.</li>
+					<li>Right click on one/multiple selected images to access the
+						context menu.</li>
+					<li>Select "View->View in KNIME" to transmit the image ID</li>
+					<li>Repeat this for all images that should be loaded to your
+						workflow</li>
+					<li>Close OMERO.insight. The image IDs are listed in the IDs field
+						and the node is ready for execution.</li>
+				</ul>
+			</option>
+		</tab>
+	</fullDescription>
+
+	<ports>
+		<outPort index="0" name="Image Outport">The images that have been loaded from
+			the OMERO database
+		</outPort>
+		<!-- possibly more output ports here -->
+	</ports>
+	<views>
+		<view index="0" name="Table Cell View">Shows the loaded images in a table cell view</view>
+		<!--view index="1" name="name of second view">Description of second view...</view -->
+	</views>
+</knimeNode>
