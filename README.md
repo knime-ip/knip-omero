@@ -1,4 +1,4 @@
-KNIME Image Processing OMERO Integration (BETA)
+KNIME Image Processing OMERO Integration
 ==========
 
 OMERO is a client-server software for visualisation, management and analysis of biological microscope images (http://www.openmicroscopy.org/). OMERO handles all your images in a secure central repository. You can view, organise, analyse and share your data from anywhere you have internet access.
