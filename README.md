@@ -8,7 +8,7 @@ We plan a tight, bidirectional integration of OMERO and KNIME. Hence, the curren
 Unfortunately writing images back to OMERO is not yet possible but we hope to further improve the integration of OMERO and provide bidirectional access to OMERO databases in the future.
 
 
-Installation Instructions for Developers
+Installation and Development
 ========
 
 Please follow the installations instructions of the [KNIME Image Processing Extension](https://github.com/knime-ip/knip) and additionally add the KNIME Image Processing - OMERO Integration projects to your workspace.
