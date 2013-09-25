@@ -48,7 +48,6 @@ Bundle-ClassPath: omeroconnector.jar,
  insightLib/ome-io.jar,
  insightLib/ome-java.jar,
  insightLib/ome-xml.jar,
- insightLib/omero.insight.jar,
  insightLib/physics.jar,
  insightLib/platform.jar,
  insightLib/poi-loci.jar,
@@ -64,7 +63,9 @@ Bundle-ClassPath: omeroconnector.jar,
  insightLib/swingx.jar,
  insightLib/TableLayout.jar,
  insightLib/wsdl4j.jar,
- insightLib/xalan.jar
+ insightLib/xalan.jar,
+ insightLib/guava-jdk5.jar,
+ insightLib/omero.insight.jar
 Bundle-Vendor: 
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
@@ -76,6 +77,7 @@ Export-Package: omero,
  org.openmicroscopy.shoola.env.data.login,
  org.openmicroscopy.shoola.env.data.util,
  org.openmicroscopy.shoola.env.event,
+ org.openmicroscopy.shoola.env.init,
  org.openmicroscopy.shoola.env.rnd.data,
  pojos
 

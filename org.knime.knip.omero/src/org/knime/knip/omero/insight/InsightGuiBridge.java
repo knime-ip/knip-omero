@@ -65,6 +65,7 @@ import org.openmicroscopy.shoola.env.data.login.UserCredentials;
 import org.openmicroscopy.shoola.env.data.util.SecurityContext;
 import org.openmicroscopy.shoola.env.event.AgentEvent;
 import org.openmicroscopy.shoola.env.event.AgentEventListener;
+import org.openmicroscopy.shoola.env.init.StartupException;
 
 import pojos.DataObject;
 import pojos.ExperimenterData;
@@ -73,11 +74,11 @@ import pojos.ImageData;
 /**
  * Starts the OMERO.insight viewer with the provided UserCredentials then
  * listens to some events from the viewer.
- * 
+ *
  * The {@link InsightGuiBridge} is intended to run in its own thread and
  * provides methods for asynchronous communication with a Gui on the KNIME side.
  * These methods are specified in the {@link InsightGuiListener} interface.
- * 
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -102,7 +103,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 
 	/**
 	 * creates a new bridge between KNIME and a OMEREO.insight viewer.
-	 * 
+	 *
 	 * @param guiListener
 	 *            {@link m_guiListener}
 	 * @param uc
@@ -127,8 +128,12 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 		final String homeDir = ConfigLocator.locateConfigFileDir();
 		if (homeDir != null) {
 
-			m_container = Container.startupInHeadlessMode(homeDir, null,
-					LookupNames.KNIME);
+			try {
+                m_container = Container.startupInHeadlessMode(homeDir, null,
+                		LookupNames.KNIME);
+            } catch (StartupException e) {
+                setListenerMessage("Error occured could not start in headless mode. " + e.getMessage());
+            }
 			setListenerMessage("starting OMERO.insight");
 
 			final Registry reg = m_container.getRegistry();
@@ -159,7 +164,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 
 	/**
 	 * listens to events from the OMERO.insight viewer.
-	 * 
+	 *
 	 * @param e
 	 *            an event from OMERO
 	 */
@@ -197,7 +202,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 	 * this method belongs to the synchronized helpers that control access to
 	 * the gui listener to allow a connection shutdown from the KNIME side
 	 * without possible null pointers
-	 * 
+	 *
 	 * @param message
 	 *            a string message that should be displayed to the user on a
 	 *            KNIME component
@@ -229,7 +234,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 	 * this method belongs to the synchronized helpers that control access to
 	 * the gui listener to allow a connection shutdown from the KNIME side
 	 * without possible null pointers
-	 * 
+	 *
 	 * @param guiListener
 	 */
 	private synchronized void setGuiListener(
@@ -245,7 +250,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 	 * this method belongs to the synchronized helpers that control access to
 	 * the gui listener to allow a connection shutdown from the KNIME side
 	 * without possible null pointers
-	 * 
+	 *
 	 * @param selectedImageIds
 	 *            OMERO image ids
 	 */

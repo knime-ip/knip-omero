@@ -84,6 +84,7 @@ import org.openmicroscopy.shoola.env.data.login.UserCredentials;
 import org.openmicroscopy.shoola.env.data.util.SecurityContext;
 import org.openmicroscopy.shoola.env.event.AgentEvent;
 import org.openmicroscopy.shoola.env.event.AgentEventListener;
+import org.openmicroscopy.shoola.env.init.StartupException;
 
 import pojos.ExperimenterData;
 import pojos.ImageData;
@@ -92,7 +93,7 @@ import pojos.PixelsData;
 /**
  * provides convenient methods to establish a headless connection to OMERO and
  * load images, or retriev information about images by their OMERO image IDs.
- * 
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -138,10 +139,11 @@ public class HeadlessImageLoader implements AgentEventListener {
 	/**
 	 * connects headless to OMERO. On success sets
 	 * {@link HeadlessImageLoader#m_isConnected m_isConnected}
-	 * 
+	 *
 	 * @return the connection state
+	 * @throws StartupException
 	 */
-	public boolean connect() {
+	public boolean connect() throws StartupException {
 		m_isConnected = connectPriv();
 		return m_isConnected;
 	}
@@ -168,7 +170,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 
 	/**
 	 * Retriev ImageIDs from PixelIDs
-	 * 
+	 *
 	 * @param m_imageIDs
 	 *            list of OMERO pixelIDs
 	 * @return the imageIDs that belong to these pixelIDs
@@ -197,7 +199,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 	/**
 	 * loads a image with the specified ID from OMERO using the headless.
 	 * connection
-	 * 
+	 *
 	 * @param imageID
 	 *            specifies a image with its OMERO image ID
 	 * @param pixelID
@@ -235,7 +237,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 	/**
 	 * retrieves the length of the 5 OMERO dimensions for multiple images.
 	 * specified by their OMERO image IDs
-	 * 
+	 *
 	 * @param imageIDs
 	 *            list of OMERO pixel IDs
 	 * @return {image}{X,Y,Z,T,C}
@@ -275,7 +277,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 	/**
 	 * retrieves the image types of a list of images specified by their OMERO
 	 * image ID.
-	 * 
+	 *
 	 * @param imageIDs
 	 *            list of OMERO image IDs
 	 * @return list of string identifier representing the image types
@@ -310,7 +312,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 	/**
 	 * loads an image planewise from OMERO and assembles the result to create an
 	 * ImgLib image.
-	 * 
+	 *
 	 * @param imageID
 	 *            the OMERO image ID of the image that should be assembled
 	 * @param typeString
@@ -319,7 +321,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 	 * @param dimLengths
 	 *            length of the 5 OMERO dimensions
 	 * @return the loaded image in ImgLib format
-	 * 
+	 *
 	 * @throws DSOutOfServiceException
 	 * @throws DSAccessException
 	 * @throws FSAccessException
@@ -388,15 +390,16 @@ public class HeadlessImageLoader implements AgentEventListener {
 	 * connects headless to OMERO using the
 	 * {@link HeadlessImageLoader#m_userCredentials m_userCredentials} and inits
 	 * the {@link HeadlessImageLoader#m_container m_container}.
-	 * 
+	 *
 	 * @return true if successfully connected
+	 * @throws StartupException
 	 */
-	private boolean connectPriv() {
+	private boolean connectPriv() throws StartupException {
 
 		final String homeDir = ConfigLocator.locateConfigFileDir();
 		if (homeDir != null) {
-			m_container = Container.startupInHeadlessMode(homeDir, null,
-					LookupNames.KNIME);
+                m_container = Container.startupInHeadlessMode(homeDir, null,
+                		LookupNames.KNIME);
 			final Registry reg = m_container.getRegistry();
 			final LoginService svc = (LoginService) reg
 					.lookup(LookupNames.LOGIN);

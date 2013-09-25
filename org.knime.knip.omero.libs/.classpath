@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="insightLib/omero.insight.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
@@ -47,7 +48,6 @@
 	<classpathentry exported="true" kind="lib" path="insightLib/ome-io.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ome-java.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ome-xml.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/omero.insight.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/physics.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/platform.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/poi-loci.jar"/>
