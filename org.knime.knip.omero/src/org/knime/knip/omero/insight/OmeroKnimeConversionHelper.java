@@ -73,7 +73,7 @@ import pojos.PixelsData;
 /**
  * collection of static helper methods for image conversion between OMERO and
  * ImgLib.
- * 
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -90,7 +90,7 @@ public final class OmeroKnimeConversionHelper {
 
 	/**
 	 * Converts OMERO image data in form of a Plane1D into a ImgLib image.
-	 * 
+	 *
 	 * @param typeString
 	 *            string identifier of a image type
 	 *            {@link org.knime.knip.omero.omerojava.PixelTypes PixelTypes}
@@ -127,7 +127,7 @@ public final class OmeroKnimeConversionHelper {
 
 	/**
 	 * Gives a ImgLib RealType for a given OMERO type string
-	 * 
+	 *
 	 * @param typeString
 	 *            string identifier of a image type
 	 *            {@link org.knime.knip.omero.omerojava.PixelTypes PixelTypes}
@@ -166,6 +166,6 @@ public final class OmeroKnimeConversionHelper {
 	 */
 	public static AxisType[] getAxes() {
 		return new AxisType[] { Axes.get("X"), Axes.get("Y"), Axes.get("Z"),
-				Axes.get("T"), Axes.get("C") };
+				Axes.get("Time"), Axes.get("Channel") };
 	}
 }
