@@ -26,7 +26,7 @@
 	<classpathentry exported="true" kind="lib" path="insightLib/grib.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/hibernate-jpa-2.0-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ice.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/ij.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ij.jar" sourcepath="/home/dietzc/.m2/repository/gov/nih/imagej/imagej/1.41/imagej-1.41-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ini4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/jai_imageio.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/java-getopt.jar"/>
@@ -51,7 +51,7 @@
 	<classpathentry exported="true" kind="lib" path="insightLib/physics.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/platform.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/poi-loci.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/poi.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/poi.jar" sourcepath="/home/dietzc/.m2/repository/org/apache/poi/poi/3.6/poi-3.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/processing-controlP5.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/processing-core.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/saaj.jar"/>

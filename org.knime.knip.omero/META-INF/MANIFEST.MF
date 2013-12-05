@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: OmeroConnector-Node extension for KNIME Workbench
 Bundle-SymbolicName: org.knime.knip.omero;singleton:=true
-Bundle-Version: 0.7.1.qualifier
+Bundle-Version: 0.8.0.qualifier
 Bundle-ClassPath: omeroconnector.jar
 Bundle-Activator: org.knime.knip.omero.OmeroReaderNodePlugin
 Bundle-Vendor: 
