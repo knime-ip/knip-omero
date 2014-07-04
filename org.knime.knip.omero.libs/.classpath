@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry exported="true" kind="lib" path="META-INF/toolsLib/omero.insight.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ai_path.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/assumeng.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/axis.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/backport-util-concurrent.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/bio-formats.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/blitz-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/blitz-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/blitz.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/bufr.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/common-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/common-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/common.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/commons-codec.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/commons-collections.jar"/>
@@ -19,13 +24,21 @@
 	<classpathentry exported="true" kind="lib" path="insightLib/commons-lang.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/commons-logging.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/commons-validator.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/ehcache.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ehcache-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/formats-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/formats-bsd.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/formats-common.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/formats-gpl.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/gicentreUtils.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/gluegen-rt.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/grib.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/guava.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/hibernate-jpa-2.0-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ice-glacier2.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ice-grid.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ice-storm.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ice.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/ij.jar" sourcepath="/home/dietzc/.m2/repository/gov/nih/imagej/imagej/1.41/imagej-1.41-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ij.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ini4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/jai_imageio.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/java-getopt.jar"/>
@@ -35,35 +48,39 @@
 	<classpathentry exported="true" kind="lib" path="insightLib/jfreechart.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/JHotDraw.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/jna.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/joda-time.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/jogl.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/loci-common.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/log4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/JWlz.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/kryo.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/logback-classic.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/logback-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/lwf-stubs.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/mdbtools-java.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/metakit.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/model-psql-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/model-psql-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/model-psql.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/nanoxml.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/native-lib-loader.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/netcdf.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ols-client.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/ome-io.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ome-java.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/ome-poi.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/ome-xml.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/perf4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/physics.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/platform.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/poi-loci.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/poi.jar" sourcepath="/home/dietzc/.m2/repository/org/apache/poi/poi/3.6/poi-3.6-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/poi.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/processing-controlP5.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/processing-core.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/saaj.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/scifio.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/serializer.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/slf4j-api.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/slf4j-log4j12.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/specification.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/swingx.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/TableLayout.jar"/>
+	<classpathentry exported="true" kind="lib" path="insightLib/turbojpeg.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/wsdl4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="insightLib/xalan.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/guava-jdk5.jar"/>
-	<classpathentry exported="true" kind="lib" path="insightLib/omero.insight.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
