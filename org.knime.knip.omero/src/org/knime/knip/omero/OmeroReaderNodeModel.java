@@ -53,7 +53,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import net.imglib2.meta.ImgPlus;
+import net.imagej.ImgPlus;
 import net.imglib2.type.numeric.RealType;
 
 import org.knime.core.data.DataColumnSpecCreator;
@@ -81,8 +81,8 @@ import org.openmicroscopy.shoola.env.data.login.UserCredentials;
 
 /**
  * This is the model implementation of OmeroReader.
- * 
- * 
+ *
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -153,7 +153,7 @@ public class OmeroReaderNodeModel extends NodeModel implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * Connects to the OMERO database using user credentials from the settings
 	 * models. Image loading is handled by an instance of
 	 * {@link HeadlessImageLoader}.
@@ -248,7 +248,7 @@ public class OmeroReaderNodeModel extends NodeModel implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * Checks if the user credentials are complete => login is possible and if
 	 * the user specified at least one image id that should be loaded.
 	 */
