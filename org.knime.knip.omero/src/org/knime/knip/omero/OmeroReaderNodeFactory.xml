@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="./omero.png" type="Source">
-	<name>OMERO Reader</name>
+	<name>OMERO Reader (5.2)</name>
 
 	<shortDescription>
 		Experimental node that reads images from an OMERO
