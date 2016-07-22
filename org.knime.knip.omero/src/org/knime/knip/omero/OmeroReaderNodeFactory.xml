@@ -23,13 +23,17 @@
 			<option name="Server">The address of the OMERO server.</option>
 			<option name="Port">A port that can be used to connect with
 				OMERO.insight to the
-				server (standard value 4064).</option>
+				server (default value 4064).</option>
 			<option name="Connection">The speed of your server connection LAN, High
 				(Broadband) or Low (Dial-up)</option>
 			<option name="Username">The username, that you use to access the server
 				with OMERO.insight</option>
 			<option name="Password">The password, that you use to access the server
 				with OMERO.insight</option>
+			<option name="Encrypted Connection">If the connection to the server
+			is encrypted, this equivalent to the closed padlock setting in
+			OMERO.insight or OMERO.web.
+			</option>
 		</tab>
 
 		<tab name="image selection">
