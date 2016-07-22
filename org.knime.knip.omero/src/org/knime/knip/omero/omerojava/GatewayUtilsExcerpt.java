@@ -48,20 +48,20 @@
  */
 package org.knime.knip.omero.omerojava;
 
-import org.openmicroscopy.shoola.env.data.DSAccessException;
-import org.openmicroscopy.shoola.env.data.DSOutOfServiceException;
-import org.openmicroscopy.shoola.env.rnd.data.DataSourceException;
+import omero.gateway.exception.DSAccessException;
+import omero.gateway.exception.DSOutOfServiceException;
+import omero.gateway.exception.DataSourceException;
 
 /*
  * A part of the GatewayUtils class in the tools component of OMERO.
  * The two upper methods have been changed to better fit our available data.
- * 
+ *
  * The only edited class in this package the other classes are copied directly from their origin.
  */
 
 /**
  * TODO Auto-generated
- * 
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -71,7 +71,7 @@ public class GatewayUtilsExcerpt {
 
 	/**
 	 * Extracts a 1D plane from the pixels set this object is working for.
-	 * 
+	 *
 	 * @param dimX
 	 *            size of the x dimension
 	 * @param dimY
@@ -82,8 +82,6 @@ public class GatewayUtilsExcerpt {
 	 * @param rawPlane
 	 *            The raw bytes of the plane (z,c,t)
 	 * @return A plane 1D object that encapsulates the actual plane pixels.
-	 * @throws DSAccessException
-	 * @throws DSOutOfServiceException
 	 */
 	public static Plane1D getPlane1D(final int dimX, final int dimY,
 			final String type, final byte[] rawPlane) throws omero.ServerError {
@@ -102,7 +100,7 @@ public class GatewayUtilsExcerpt {
 	/**
 	 * Convert the rawPlane data to a Plane1D object which can then convert that
 	 * raw byte data to anytype the caller wants.
-	 * 
+	 *
 	 * @param dimX
 	 *            size of the x dimension
 	 * @param dimY
@@ -130,7 +128,7 @@ public class GatewayUtilsExcerpt {
 
 	/**
 	 * Returns the number of bytes per pixel depending on the pixel type.
-	 * 
+	 *
 	 * @param pixelsType
 	 *            The pixels Type.
 	 * @return See above.

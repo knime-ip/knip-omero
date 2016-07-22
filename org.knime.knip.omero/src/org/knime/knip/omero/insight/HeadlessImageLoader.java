@@ -54,6 +54,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.knime.knip.omero.omerojava.GatewayUtilsExcerpt;
+import org.knime.knip.omero.omerojava.Plane1D;
+import org.openmicroscopy.shoola.env.Container;
+import org.openmicroscopy.shoola.env.LookupNames;
+import org.openmicroscopy.shoola.env.config.Registry;
+import org.openmicroscopy.shoola.env.data.AdminService;
+import org.openmicroscopy.shoola.env.data.FSAccessException;
+import org.openmicroscopy.shoola.env.data.OmeroDataService;
+import org.openmicroscopy.shoola.env.data.OmeroImageService;
+import org.openmicroscopy.shoola.env.data.events.ConnectedEvent;
+import org.openmicroscopy.shoola.env.data.events.ExitApplication;
+import org.openmicroscopy.shoola.env.data.login.LoginService;
+import org.openmicroscopy.shoola.env.data.login.UserCredentials;
+import org.openmicroscopy.shoola.env.event.AgentEvent;
+import org.openmicroscopy.shoola.env.event.AgentEventListener;
+import org.openmicroscopy.shoola.env.init.StartupException;
+
 import net.imagej.ImgPlus;
 import net.imglib2.FinalInterval;
 import net.imglib2.Interval;
@@ -65,30 +82,13 @@ import net.imglib2.iterator.IntervalIterator;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.util.IntervalIndexer;
 import omero.ServerError;
+import omero.gateway.SecurityContext;
+import omero.gateway.exception.DSAccessException;
+import omero.gateway.exception.DSOutOfServiceException;
+import omero.gateway.model.ExperimenterData;
+import omero.gateway.model.ImageData;
+import omero.gateway.model.PixelsData;
 
-import org.knime.knip.omero.omerojava.GatewayUtilsExcerpt;
-import org.knime.knip.omero.omerojava.Plane1D;
-import org.openmicroscopy.shoola.env.Container;
-import org.openmicroscopy.shoola.env.LookupNames;
-import org.openmicroscopy.shoola.env.config.Registry;
-import org.openmicroscopy.shoola.env.data.AdminService;
-import org.openmicroscopy.shoola.env.data.DSAccessException;
-import org.openmicroscopy.shoola.env.data.DSOutOfServiceException;
-import org.openmicroscopy.shoola.env.data.FSAccessException;
-import org.openmicroscopy.shoola.env.data.OmeroDataService;
-import org.openmicroscopy.shoola.env.data.OmeroImageService;
-import org.openmicroscopy.shoola.env.data.events.ConnectedEvent;
-import org.openmicroscopy.shoola.env.data.events.ExitApplication;
-import org.openmicroscopy.shoola.env.data.login.LoginService;
-import org.openmicroscopy.shoola.env.data.login.UserCredentials;
-import org.openmicroscopy.shoola.env.data.util.SecurityContext;
-import org.openmicroscopy.shoola.env.event.AgentEvent;
-import org.openmicroscopy.shoola.env.event.AgentEventListener;
-import org.openmicroscopy.shoola.env.init.StartupException;
-
-import pojos.ExperimenterData;
-import pojos.ImageData;
-import pojos.PixelsData;
 
 /**
  * provides convenient methods to establish a headless connection to OMERO and
