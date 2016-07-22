@@ -82,6 +82,7 @@ public class GatewayUtilsExcerpt {
 	 * @param rawPlane
 	 *            The raw bytes of the plane (z,c,t)
 	 * @return A plane 1D object that encapsulates the actual plane pixels.
+	 * @throws omero.ServerError
 	 */
 	public static Plane1D getPlane1D(final int dimX, final int dimY,
 			final String type, final byte[] rawPlane) throws omero.ServerError {

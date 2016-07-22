@@ -78,10 +78,12 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.knip.omero.insight.InsightGuiBridge;
@@ -138,6 +140,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 
 	private DialogComponentPasswordField m_pwDC;
 
+	private DialogComponentBoolean m_encryptedConnectionDC;
+
 	// GUI and IDs
 	private final JPanel m_mainPanel;
 
@@ -182,6 +186,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		m_portDC.saveSettingsTo(settings);
 		m_speedDC.saveSettingsTo(settings);
 		m_userDC.saveSettingsTo(settings);
+		m_encryptedConnectionDC.saveSettingsTo(settings);
 
 		// encryption test
 		if (!isEncryptionOnline()) {
@@ -251,6 +256,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		m_speedDC.loadSettingsFrom(settings, specs);
 		m_userDC.loadSettingsFrom(settings, specs);
 		m_pwDC.loadSettingsFrom(settings, specs);
+		m_encryptedConnectionDC.loadSettingsFrom(settings, specs);
 
 		m_idListModel.clear();
 
@@ -436,6 +442,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 				.createSpeedSM();
 		final SettingsModelString userSM = OmeroReaderNodeModel.createUserSM();
 		final SettingsModelString pwSM = OmeroReaderNodeModel.createPwSM();
+		final SettingsModelBoolean encryptedConnectionSM = OmeroReaderNodeModel.createEncryptedConnectionSM();
 
 		// panel
 		final JPanel ret = new JPanel(new GridBagLayout());
@@ -489,6 +496,14 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			gbc.insets.right = 5;
 			ret.add(m_pwDC.getComponentPanel(), gbc);
+		}
+		m_encryptedConnectionDC = new DialogComponentBoolean(encryptedConnectionSM, "Encrypted Connection");
+		{
+			gbc.gridy++;
+			gbc.gridx = 0;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			gbc.insets.right = 5;
+			ret.add(m_encryptedConnectionDC.getComponentPanel(), gbc);
 		}
 
 		return ret;

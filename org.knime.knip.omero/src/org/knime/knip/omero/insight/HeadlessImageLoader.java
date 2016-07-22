@@ -54,6 +54,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.knime.core.node.NodeLogger;
+import org.knime.knip.omero.OmeroReaderNodeModel;
 import org.knime.knip.omero.omerojava.GatewayUtilsExcerpt;
 import org.knime.knip.omero.omerojava.Plane1D;
 import org.openmicroscopy.shoola.env.Container;
@@ -100,6 +102,8 @@ import omero.gateway.model.PixelsData;
  *         Zinsmaier</a>
  */
 public class HeadlessImageLoader implements AgentEventListener {
+
+    NodeLogger LOGGER = NodeLogger.getLogger(OmeroReaderNodeModel.class);
 
 	/**
 	 * contains all information needed to connect to a OMERO database.
@@ -157,7 +161,11 @@ public class HeadlessImageLoader implements AgentEventListener {
 			m_isConnected = false;
 			final ExitApplication ev = new ExitApplication(false);
 			ev.setSecurityContext(new SecurityContext(m_groupID));
+			try{
 			m_container.getRegistry().getEventBus().post(ev);
+			} catch (NullPointerException e){
+			    LOGGER.debug("Caught nullpointer when disconnecting from OMERO server!" , e);
+			}
 		}
 	}
 
@@ -183,7 +191,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 			throw new DSOutOfServiceException("not connected");
 		}
 
-		ArrayList<Long> ids = new ArrayList<Long>();
+		ArrayList<Long> ids = new ArrayList<>();
 		final OmeroImageService imgSvc = m_container.getRegistry()
 				.getImageService();
 
@@ -230,7 +238,7 @@ public class HeadlessImageLoader implements AgentEventListener {
 		// load pixel data
 		final Img<RealType> img = assembleImage(pixelID, typeString, dimLengths);
 
-		return new ImgPlus<RealType>(img, "" + pixelID,
+		return new ImgPlus<>(img, "" + pixelID,
 				OmeroKnimeConversionHelper.getAxes());
 	}
 
