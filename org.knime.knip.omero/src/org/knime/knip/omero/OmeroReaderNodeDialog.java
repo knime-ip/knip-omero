@@ -78,10 +78,12 @@ import org.knime.core.node.NodeLogger;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
+import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumberEdit;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.knip.omero.insight.InsightGuiBridge;
@@ -89,8 +91,8 @@ import org.knime.knip.omero.insight.InsightGuiListener;
 import org.openmicroscopy.shoola.env.data.login.UserCredentials;
 
 /**
- * 
- * 
+ *
+ *
  * @author <a href="mailto:dietzc85@googlemail.com">Christian Dietz</a>
  * @author <a href="mailto:horn_martin@gmx.de">Martin Horn</a>
  * @author <a href="mailto:michael.zinsmaier@googlemail.com">Michael
@@ -114,7 +116,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 	 * creates an array with string representations of OMERO connection speed
 	 * parameters. Arrays should be created with this method in the dialog and
 	 * the model to ensure that the indices are the same.
-	 * 
+	 *
 	 * @return {Low, High, LAN}
 	 */
 	static String[] createSpeedArray() {
@@ -138,6 +140,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 
 	private DialogComponentPasswordField m_pwDC;
 
+	private DialogComponentBoolean m_encryptedConnectionDC;
+
 	// GUI and IDs
 	private final JPanel m_mainPanel;
 
@@ -145,7 +149,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 
 	private JLabel m_messageL;
 
-	private DefaultListModel m_idListModel;
+	private DefaultListModel<Long> m_idListModel;
 
 	/**
 	 * holds a reference to the class that controlls the OMEREO.insight viewer.
@@ -182,6 +186,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		m_portDC.saveSettingsTo(settings);
 		m_speedDC.saveSettingsTo(settings);
 		m_userDC.saveSettingsTo(settings);
+		m_encryptedConnectionDC.saveSettingsTo(settings);
 
 		// encryption test
 		if (!isEncryptionOnline()) {
@@ -251,6 +256,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		m_speedDC.loadSettingsFrom(settings, specs);
 		m_userDC.loadSettingsFrom(settings, specs);
 		m_pwDC.loadSettingsFrom(settings, specs);
+		m_encryptedConnectionDC.loadSettingsFrom(settings, specs);
 
 		m_idListModel.clear();
 
@@ -259,7 +265,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		final StringTokenizer tk = new StringTokenizer(listValue, ";");
 
 		while (tk.hasMoreTokens()) {
-			m_idListModel.addElement(tk.nextToken());
+			m_idListModel.addElement(Long.parseLong(tk.nextToken()));
 		}
 	}
 
@@ -324,11 +330,11 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 	 * @return true if the encryption actually changes encrypted text aka a key
 	 *         is set
 	 */
-	@SuppressWarnings("static-access")
+//	@SuppressWarnings("static-access")
 	private boolean isEncryptionOnline() {
 		// hacky test if the encryption works
 		try {
-			if (!m_pwDC.encrypt("is encryption online".toCharArray()).equals(
+			if (!DialogComponentPasswordField.encrypt("is encryption online".toCharArray()).equals(
 					"is encryption online")) {
 				return true;
 			}
@@ -357,8 +363,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 			gbc.gridy = 0;
 			ret.add(listL, gbc);
 		}
-		m_idListModel = new DefaultListModel();
-		final JList list = new JList(m_idListModel);
+		m_idListModel = new DefaultListModel<>();
+		final JList<Long> list = new JList<>(m_idListModel);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 
@@ -378,9 +384,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 
 		// INNER PART OF BUTTON PANEL
 		m_startInsightB = new JButton("start OMERO.insight");
-		m_startInsightB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
+		m_startInsightB.addActionListener(e -> {
 				if (m_insightGui == null) {
 					m_startInsightB.setEnabled(false);
 					m_insightGui = new InsightGuiBridge(
@@ -390,7 +394,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 					t.start();
 				}
 			}
-		});
+		);
 		{
 			b2Panel.add(m_startInsightB);
 		}
@@ -399,10 +403,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		removeSelectedB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				final Object[] selected = list.getSelectedValues();
-				for (final Object object : selected) {
-					m_idListModel.removeElement(object);
-				}
+			    list.getSelectedValuesList().forEach(value ->
+			        m_idListModel.removeElement(value));
 			}
 		});
 		{
@@ -440,6 +442,7 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 				.createSpeedSM();
 		final SettingsModelString userSM = OmeroReaderNodeModel.createUserSM();
 		final SettingsModelString pwSM = OmeroReaderNodeModel.createPwSM();
+		final SettingsModelBoolean encryptedConnectionSM = OmeroReaderNodeModel.createEncryptedConnectionSM();
 
 		// panel
 		final JPanel ret = new JPanel(new GridBagLayout());
@@ -493,6 +496,14 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 			gbc.gridwidth = GridBagConstraints.REMAINDER;
 			gbc.insets.right = 5;
 			ret.add(m_pwDC.getComponentPanel(), gbc);
+		}
+		m_encryptedConnectionDC = new DialogComponentBoolean(encryptedConnectionSM, "Encrypted Connection");
+		{
+			gbc.gridy++;
+			gbc.gridx = 0;
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
+			gbc.insets.right = 5;
+			ret.add(m_encryptedConnectionDC.getComponentPanel(), gbc);
 		}
 
 		return ret;

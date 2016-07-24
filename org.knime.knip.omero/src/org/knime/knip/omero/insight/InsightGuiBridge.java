@@ -62,14 +62,17 @@ import org.openmicroscopy.shoola.env.data.events.ExitApplication;
 import org.openmicroscopy.shoola.env.data.events.ViewInPluginEvent;
 import org.openmicroscopy.shoola.env.data.login.LoginService;
 import org.openmicroscopy.shoola.env.data.login.UserCredentials;
-import org.openmicroscopy.shoola.env.data.util.SecurityContext;
 import org.openmicroscopy.shoola.env.event.AgentEvent;
 import org.openmicroscopy.shoola.env.event.AgentEventListener;
 import org.openmicroscopy.shoola.env.init.StartupException;
 
-import pojos.DataObject;
-import pojos.ExperimenterData;
-import pojos.ImageData;
+import omero.gateway.SecurityContext;
+import omero.gateway.model.DataObject;
+import omero.gateway.model.ExperimenterData;
+import omero.gateway.model.ImageData;
+
+
+
 
 /**
  * Starts the OMERO.insight viewer with the provided UserCredentials then
@@ -174,7 +177,7 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 			final ViewInPluginEvent evt = (ViewInPluginEvent) e;
 			if (evt.getPlugin() == LookupNames.KNIME) {
 				// retrieve IDs of selected images
-				final LinkedList<Long> ids = new LinkedList<Long>();
+				final LinkedList<Long> ids = new LinkedList<>();
 
 				for (final DataObject obj : evt.getDataObjects()) {
 					if (obj instanceof ImageData) {
@@ -274,6 +277,10 @@ public class InsightGuiBridge implements Runnable, AgentEventListener {
 	 * without possible null pointers
 	 */
 	public synchronized void disconnect() {
+        // When the initial connection was not successful, m_container will be null
+	    if(m_container == null){
+	        return;
+	    }
 		final Registry reg = m_container.getRegistry();
 
 		m_guiListener = null;

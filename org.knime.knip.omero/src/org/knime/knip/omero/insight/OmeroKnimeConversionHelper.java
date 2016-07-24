@@ -48,6 +48,8 @@
  */
 package org.knime.knip.omero.insight;
 
+import org.knime.knip.omero.omerojava.Plane1D;
+
 import net.imagej.axis.Axes;
 import net.imagej.axis.AxisType;
 import net.imglib2.img.basictypeaccess.array.ArrayDataAccess;
@@ -63,12 +65,10 @@ import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.integer.UnsignedIntType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.imglib2.type.numeric.real.DoubleType;
+import omero.gateway.exception.DSAccessException;
+import omero.gateway.exception.DSOutOfServiceException;
+import omero.gateway.model.PixelsData;
 
-import org.knime.knip.omero.omerojava.Plane1D;
-import org.openmicroscopy.shoola.env.data.DSAccessException;
-import org.openmicroscopy.shoola.env.data.DSOutOfServiceException;
-
-import pojos.PixelsData;
 
 /**
  * collection of static helper methods for image conversion between OMERO and

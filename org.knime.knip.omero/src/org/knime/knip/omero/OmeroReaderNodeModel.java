@@ -53,9 +53,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import net.imagej.ImgPlus;
-import net.imglib2.type.numeric.RealType;
-
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.RowKey;
@@ -72,12 +69,16 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.DialogComponentPasswordField;
+import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
 import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.knip.base.data.img.ImgPlusCell;
 import org.knime.knip.base.data.img.ImgPlusCellFactory;
 import org.knime.knip.omero.insight.HeadlessImageLoader;
 import org.openmicroscopy.shoola.env.data.login.UserCredentials;
+
+import net.imagej.ImgPlus;
+import net.imglib2.type.numeric.RealType;
 
 /**
  * This is the model implementation of OmeroReader.
@@ -125,6 +126,10 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		return new SettingsModelString("OIpw", "");
 	}
 
+	static SettingsModelBoolean createEncryptedConnectionSM(){
+	    return new SettingsModelBoolean("Use encrypted connection", false);
+	}
+
 	// SETTINGS
 	private final SettingsModelString m_serverSM = createServerSM();
 
@@ -135,6 +140,8 @@ public class OmeroReaderNodeModel extends NodeModel implements
 	private final SettingsModelString m_userSM = createUserSM();
 
 	private final SettingsModelString m_pwSM = createPwSM();
+
+	private final SettingsModelBoolean m_encryptedConnectionSM = createEncryptedConnectionSM();
 
 	// SETTINGS VAR
 	static final String IMAGE_ID_KEY = "ImageIDs";
@@ -284,6 +291,11 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		m_speedSM.saveSettingsTo(settings);
 		m_userSM.saveSettingsTo(settings);
 		m_pwSM.saveSettingsTo(settings);
+		try{
+		m_encryptedConnectionSM.saveSettingsTo(settings);
+        } catch (Exception e){
+
+        }
 
 		String listValue = "";
 		if ((m_pixelIDs != null) && (m_pixelIDs.length > 0)) {
@@ -306,11 +318,17 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		m_speedSM.loadSettingsFrom(settings);
 		m_userSM.loadSettingsFrom(settings);
 		m_pwSM.loadSettingsFrom(settings);
+		m_encryptedConnectionSM.loadSettingsFrom(settings);
+		try{
+		    m_encryptedConnectionSM.loadSettingsFrom(settings);
+		} catch (InvalidSettingsException e){
+		    // backwards compatibility
+		}
 
 		final String listValue = settings.getString(
 				OmeroReaderNodeModel.IMAGE_ID_KEY, "");
 		final StringTokenizer tk = new StringTokenizer(listValue, ";");
-		final ArrayList<Long> ids = new ArrayList<Long>();
+		final ArrayList<Long> ids = new ArrayList<>();
 
 		while (tk.hasMoreTokens()) {
 			ids.add(Long.valueOf(tk.nextToken()));
@@ -330,11 +348,16 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		m_userSM.validateSettings(settings);
 		m_pwSM.validateSettings(settings);
 		m_pwSM.validateSettings(settings);
+		try{
+		    m_encryptedConnectionSM.validateSettings(settings);
+		} catch (InvalidSettingsException e){
+		    // backwards compatibility
+		}
 
 		final String listValue = settings.getString(
 				OmeroReaderNodeModel.IMAGE_ID_KEY, "");
 		final StringTokenizer tk = new StringTokenizer(listValue, ";");
-		final ArrayList<Long> ids = new ArrayList<Long>();
+		final ArrayList<Long> ids = new ArrayList<>();
 
 		while (tk.hasMoreTokens()) {
 			ids.add(Long.valueOf(tk.nextToken()));
@@ -386,6 +409,9 @@ public class OmeroReaderNodeModel extends NodeModel implements
 
 		final UserCredentials uc = new UserCredentials(user, pw, server, speed);
 		uc.setPort(port);
+
+		// use encrypted connection if specified by the use
+		uc.setEncrypted(m_encryptedConnectionSM.getBooleanValue());
 
 		return uc;
 	}
