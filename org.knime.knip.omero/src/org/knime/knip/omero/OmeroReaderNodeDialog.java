@@ -400,13 +400,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 		}
 		final JButton removeSelectedB = new JButton("remove selected");
 		removeSelectedB.setMaximumSize(m_startInsightB.getMaximumSize());
-		removeSelectedB.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-			    list.getSelectedValuesList().forEach(value ->
-			        m_idListModel.removeElement(value));
-			}
-		});
+		removeSelectedB.addActionListener(e -> list.getSelectedValuesList().forEach(value ->
+            m_idListModel.removeElement(value)));
 		{
 			b2Panel.add(removeSelectedB);
 		}

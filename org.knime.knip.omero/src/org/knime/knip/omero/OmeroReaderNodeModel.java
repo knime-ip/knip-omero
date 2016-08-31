@@ -292,7 +292,7 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		m_userSM.saveSettingsTo(settings);
 		m_pwSM.saveSettingsTo(settings);
 		try{
-		m_encryptedConnectionSM.saveSettingsTo(settings);
+		    m_encryptedConnectionSM.saveSettingsTo(settings);
         } catch (Exception e){
 
         }
@@ -318,7 +318,6 @@ public class OmeroReaderNodeModel extends NodeModel implements
 		m_speedSM.loadSettingsFrom(settings);
 		m_userSM.loadSettingsFrom(settings);
 		m_pwSM.loadSettingsFrom(settings);
-		m_encryptedConnectionSM.loadSettingsFrom(settings);
 		try{
 		    m_encryptedConnectionSM.loadSettingsFrom(settings);
 		} catch (InvalidSettingsException e){

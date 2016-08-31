@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: OmeroConnector-Node extension for KNIME Workbench, OMERO 5.1 version
+Bundle-SymbolicName: org.knime.knip.omero50;singleton:=true
+Bundle-Version: 0.10.1.qualifier
+Bundle-ClassPath: omeroconnector.jar
+Bundle-Activator: org.knime.knip.omero50.OmeroReader50NodePlugin
+Bundle-Vendor: 
+Require-Bundle: org.eclipse.core.runtime,
+ org.knime.workbench.core;bundle-version="[3.0.0,4.0.0)",
+ org.knime.workbench.repository;bundle-version="[3.0.0,4.0.0)",
+ org.knime.base;bundle-version="[3.0.0,4.0.0)",
+ org.knime.knip.base;bundle-version="[1.4.0,2.0.0)",
+ org.knime.knip.core;bundle-version="[1.4.0,2.0.0)",
+ imglib2;bundle-version="2.4.0",
+ imagej-common;bundle-version="0.18.0",
+ scijava-cache;bundle-version="0.1.0",
+ org.knime.knip.omero50.libs;bundle-version="0.10.1"
+Bundle-ActivationPolicy: lazy
+Export-Package: org.knime.knip.omero50
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+

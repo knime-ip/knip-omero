@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.knime.knip.omero51.update"
+      label="KNIP Update Site"
+      version="0.10.1.qualifier">
+
+</feature>
