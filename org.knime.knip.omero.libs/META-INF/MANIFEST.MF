@@ -88,10 +88,14 @@ Bundle-Vendor:
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: omero,
+Export-Package: mdbtools.libmdb,
+ omero,
  omero.gateway,
  omero.gateway.exception,
+ omero.gateway.facility,
  omero.gateway.model,
+ omero.log,
+ omero.model,
  org.openmicroscopy.shoola.env,
  org.openmicroscopy.shoola.env.config,
  org.openmicroscopy.shoola.env.data,

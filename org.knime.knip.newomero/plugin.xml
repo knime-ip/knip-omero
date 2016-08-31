@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.knime.core.PortType">
+      <portType
+            hidden="false"
+            name="org.knime.knip.newomero.omeroConnection"
+            objectClass="org.knime.knip.newomero.nodes.connection.port.OmeroConnectionInfoPortObject"
+            objectSerializer="org.knime.knip.newomero.nodes.connection.port.OmeroConnectionInfoPortObject$Serializer"
+            specClass="org.knime.knip.newomero.nodes.connection.port.OmeroConnectionInfoPortObjectSpec"
+            specSerializer="org.knime.knip.newomero.nodes.connection.port.OmeroConnectionInfoPortObjectSpec$Serializer">
+      </portType>
+   </extension>
+   <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            deprecated="false"
+            factory-class="org.knime.knip.newomero.nodes.connection.OmeroConnectionInfoNodeFactory">
+      </node>
+   </extension>
+   <extension
+         point="org.knime.base.filehandling.RemoteFileHandler">
+      <RemoteFileHandler
+            RemoteFileHandler="org.knime.knip.newomero.remote.OmeroFileHandler">
+      </RemoteFileHandler>
+   </extension>
+   <extension
+         point="org.knime.core.PortType">
+      <portType
+            hidden="false"
+            name="Omero Connection Information Port"
+            objectClass="org.knime.knip.newomero.port.OmeroConnectionInformationPortObject"
+            objectSerializer="org.knime.knip.newomero.port.OmeroConnectionInformationPortObject$Serializer"
+            specClass="org.knime.knip.newomero.port.OmeroConnectionInformationPortObjectSpec">
+      </portType>
+   </extension>
+    
+</plugin>
