@@ -91,7 +91,7 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
 			return name;
 		}
 		// name (Type)
-		return MessageFormat.format("{0} ({1})", name, OmeroUtils.capitalize(type.toString()));
+		return MessageFormat.format("{0} ({1}; id:{2})", name, OmeroUtils.capitalize(type.toString()), id);
 	}
 
 	@Override
