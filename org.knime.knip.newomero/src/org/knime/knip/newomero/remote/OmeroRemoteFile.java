@@ -214,11 +214,11 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
 	private static URI createOMEROURI(final OmeroRemoteFileType type, final Long id, ConnectionInformation info) {
 		OmeroConnectionInformation omeroInfo = (OmeroConnectionInformation) info;
 		// ome://user@host:port/datatype/id
-		String url = MessageFormat.format("ome://{0}@{1}:{2}/{3}/{4}", omeroInfo.getUser(), omeroInfo.getHost(),
-				omeroInfo.getPort(), type.toString(), id);
+		String path = MessageFormat.format("/{0}/{1}", type.toString(), id);
+
 		URI uri = null;
 		try {
-			uri = new URI(url);
+			uri = new URI("ome", omeroInfo.getUser(), omeroInfo.getHost(), omeroInfo.getPort(), path, null, null);
 		} catch (URISyntaxException e) {
 			throw new IllegalArgumentException("Could not create URI:", e);
 		}
