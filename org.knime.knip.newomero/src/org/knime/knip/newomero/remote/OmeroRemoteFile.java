@@ -11,25 +11,30 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.knime.base.filehandling.remote.connectioninformation.port.ConnectionInformation;
 import org.knime.base.filehandling.remote.files.ConnectionMonitor;
 import org.knime.base.filehandling.remote.files.RemoteFile;
+import org.knime.core.node.NodeLogger;
 import org.knime.knip.newomero.port.OmeroConnectionInformation;
 import org.knime.knip.newomero.util.OmeroUtils;
 
 import omero.gateway.Gateway;
 import omero.gateway.SecurityContext;
 import omero.gateway.facility.BrowseFacility;
+import omero.gateway.facility.DataManagerFacility;
 import omero.gateway.model.DatasetData;
 import omero.gateway.model.ImageData;
 import omero.gateway.model.ProjectData;
+import omero.model.IObject;
 
 public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
 
 	private final OmeroRemoteFileType type;
 	private final Long id;
+	private NodeLogger log = NodeLogger.getLogger(getClass());
 
 	private String name;
 
@@ -137,7 +142,39 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
 
 	@Override
 	public boolean delete() throws Exception {
-		throw new UnsupportedOperationException(unsupportedMessage("delete"));
+		final Gateway gw = getConnection().getGateway();
+		final SecurityContext ctx = getConnection().getSecurtiyContext();
+		BrowseFacility browse = gw.getFacility(BrowseFacility.class);
+		DataManagerFacility dm = gw.getFacility(DataManagerFacility.class);
+
+		List<Long> idList = Arrays.asList(id);
+
+		try {
+			IObject object = null;
+			switch (type) {
+			case IMAGE:
+				object = browse.getImage(ctx, id).asIObject();
+				break;
+			case PROJECT:
+				object = browse.getProjects(ctx, idList).iterator().next().asIObject();
+				break;
+			case DATASET:
+				object = browse.getDatasets(ctx, idList).iterator().next().asIObject();
+				break;
+			case ROOT:
+				throw new UnsupportedOperationException("Can not delete the root");
+			}
+
+			dm.delete(ctx, object);
+		} catch (NoSuchElementException e) {
+			log.warn("Could not locate file on the server, maybe it has already been deleted?");
+			return false;
+		} catch (Throwable e) {
+			log.warn("Could not delete: " + e.getMessage());
+			log.debug(e);
+			return false;
+		}
+		return true;
 	}
 
 	@Override
