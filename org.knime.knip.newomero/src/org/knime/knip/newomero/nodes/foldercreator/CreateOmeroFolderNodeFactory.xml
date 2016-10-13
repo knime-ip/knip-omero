@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="missing.png" type="Manipulator">
+	<name>Create Omero Folder</name>
+
+	<shortDescription>Creates Projects and Datasets on the OMERO server</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node allows you to create Projects and Datasets on a OMERO
+			server.
+		</intro>
+
+		<tab name="Folder Properties">
+			<option name="Folder Type">
+				The type of the folder, can be either
+				<b>Project</b> or <b>Dataset</b> .
+			</option>
+			<option name="Name">
+				The name of the folder that will be created.
+			</option>
+			<option name="Description" optional="true">
+				The description of the
+				folder.
+			</option>
+		</tab>
+		<tab name="Dataset options">
+			<option name="Enclosing Project">
+				The project enclosing the dataset, to locate the dataset at the
+				root of the tree without an enclosing project, choose
+				<b>ROOT</b>.
+			</option>
+			<option name="Refresh projects">
+				Connects to the server and refreshes the list of projects.
+			</option>
+		</tab>
+	</fullDescription>
+
+	<ports>
+		<inPort name="Connection Information" index="0">Information needed to
+		connect to the server (from OMERO Connection node).</inPort>
+		<outPort name="Path to Created Folder" index="0">
+			Flow variable containing the URI to the created folder.
+		</outPort>
+	</ports>
+</knimeNode>

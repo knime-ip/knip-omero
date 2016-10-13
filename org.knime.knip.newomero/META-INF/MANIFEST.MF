@@ -18,6 +18,7 @@ Require-Bundle: org.knime.base.filehandling;bundle-version="3.2.0",
  imagej-common;bundle-version="0.24.0",
  org.knime.knip.omero.libs
 Export-Package: org.knime.knip.newomero.nodes.connection,
+ org.knime.knip.newomero.nodes.foldercreator,
  org.knime.knip.newomero.port,
  org.knime.knip.newomero.remote,
  org.knime.knip.newomero.util
