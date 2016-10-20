@@ -36,7 +36,8 @@
             name="Omero Connection Information Port"
             objectClass="org.knime.knip.newomero.port.OmeroConnectionInformationPortObject"
             objectSerializer="org.knime.knip.newomero.port.OmeroConnectionInformationPortObject$Serializer"
-            specClass="org.knime.knip.newomero.port.OmeroConnectionInformationPortObjectSpec">
+            specClass="org.knime.knip.newomero.port.OmeroConnectionInformationPortObjectSpec"
+            specSerializer="org.knime.knip.newomero.port.OmeroConnectionInformationPortObjectSpec$Serializer">
       </portType>
    </extension>
     
