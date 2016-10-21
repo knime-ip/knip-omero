@@ -1,5 +1,9 @@
 package org.knime.knip.newomero.remote;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
@@ -18,6 +22,7 @@ import org.knime.base.filehandling.remote.connectioninformation.port.ConnectionI
 import org.knime.base.filehandling.remote.files.ConnectionMonitor;
 import org.knime.base.filehandling.remote.files.RemoteFile;
 import org.knime.core.node.NodeLogger;
+import org.knime.core.util.FileUtil;
 import org.knime.knip.newomero.port.OmeroConnectionInformation;
 import org.knime.knip.newomero.util.OmeroUtils;
 
@@ -25,6 +30,7 @@ import omero.gateway.Gateway;
 import omero.gateway.SecurityContext;
 import omero.gateway.facility.BrowseFacility;
 import omero.gateway.facility.DataManagerFacility;
+import omero.gateway.facility.TransferFacility;
 import omero.gateway.model.DatasetData;
 import omero.gateway.model.ImageData;
 import omero.gateway.model.ProjectData;
@@ -124,7 +130,19 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
 
     @Override
     public InputStream openInputStream() throws Exception {
-        throw new UnsupportedOperationException(unsupportedMessage("open input stream"));
+        // open connection
+        open();
+        final Gateway gw = getConnection().getGateway();
+        final SecurityContext ctx = getConnection().getSecurtiyContext();
+        final TransferFacility transfer = gw.getFacility(TransferFacility.class);
+        final File tempdir = FileUtil.createTempDir("omeroDownload-");
+        final List<File> imgs = transfer.downloadImage(ctx, tempdir.getAbsolutePath(), getId());
+        getConnection().close();
+
+        if (imgs.size() != 1) {
+            throw new IllegalStateException();
+        }
+        return new OmeroInputStream(imgs.get(0));
     }
 
     @Override
@@ -350,4 +368,26 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
         return id;
     }
 
+    private class OmeroInputStream extends FileInputStream {
+
+        private final File file;
+
+        /**
+         * @param file
+         * @throws FileNotFoundException
+         */
+        public OmeroInputStream(final File file) throws FileNotFoundException {
+            super(file);
+            this.file = file;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void close() throws IOException {
+            super.close();
+            file.delete();
+        }
+    }
 }
