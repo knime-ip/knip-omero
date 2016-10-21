@@ -21,6 +21,7 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponentLabel;
+import org.knime.core.node.defaultnodesettings.DialogComponentMultiLineString;
 import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
 import org.knime.core.node.defaultnodesettings.SettingsModelLong;
@@ -39,7 +40,8 @@ import omero.gateway.model.ProjectData;
 
 public class CreateOmeroFolderNodeDialog extends DefaultNodeSettingsPane {
 
-    protected static final NodeLogger LOGGER = NodeLogger.getLogger(CreateOmeroFolderNodeDialog.class);
+    protected static final NodeLogger LOGGER =
+            NodeLogger.getLogger(CreateOmeroFolderNodeDialog.class);
     private final SettingsModelString targetTypeModel =
             CreateOmeroFolderSettings.createTargetTypeModel();
     private final SettingsModelString nameModel = CreateOmeroFolderSettings.createTargetNameModel();
@@ -73,13 +75,13 @@ public class CreateOmeroFolderNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(new DialogComponentString(nameModel, "Name", true, 18, fvm));
         setHorizontalPlacement(false);
 
-        addDialogComponent(new DialogComponentString(descriptionModel, "Description", false, 30));
+        addDialogComponent(new DialogComponentMultiLineString(descriptionModel, "Description"));
         closeCurrentGroup();
 
         createNewGroup("Dataset options");
         setHorizontalPlacement(true);
-        projectSelection = new DialogComponentStringSelection(projectSelectionModel,
-                "Enclosing Project", new String[] { "<ROOT>" });
+        projectSelection = new DialogComponentStringSelection(projectSelectionModel, "Root Project",
+                new String[] { "<ROOT>" });
         addDialogComponent(projectSelection);
 
         refreshButton = new DialogComponentJButton("Refresh Projects");
@@ -88,7 +90,7 @@ public class CreateOmeroFolderNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(refreshButton);
         setHorizontalPlacement(false);
 
-        statusText = new DialogComponentLabel("No projects loaded from OMERO Server.");
+        statusText = new DialogComponentLabel("Not connected to OMERO");
         addDialogComponent(statusText);
 
     }

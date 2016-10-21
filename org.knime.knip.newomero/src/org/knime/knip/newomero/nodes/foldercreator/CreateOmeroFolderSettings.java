@@ -56,7 +56,7 @@ public class CreateOmeroFolderSettings {
     }
 
     public static SettingsModelLong createSelectedProjectModel() {
-        return new SettingsModelLong("ID of enclosing Project", 0l);
+        return new SettingsModelLong("ID of root Project", -1l);
     }
 
     public static SettingsModelString createVariableNameModel() {
