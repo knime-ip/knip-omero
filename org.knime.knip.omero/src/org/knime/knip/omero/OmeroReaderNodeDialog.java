@@ -322,6 +322,8 @@ public class OmeroReaderNodeDialog extends NodeDialogPane implements
 
 		final UserCredentials uc = new UserCredentials(user, pw, server, speed);
 		uc.setPort(port);
+		uc.setEncrypted(((SettingsModelBoolean) m_encryptedConnectionDC
+		        .getModel()).getBooleanValue());
 
 		return uc;
 	}
