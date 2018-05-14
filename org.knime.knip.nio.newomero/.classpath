@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/omero/activation.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/axis-wsdl4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/axis2-saaj.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/backport-util-concurrent.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/blitz.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/bufr.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-beanutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-collections.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-digester.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-discovery.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-io.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/commons-validator.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ehcache-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/filters.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/formats-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/glacier2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/grib.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/guava.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/httpmime.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ice.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/icegrid.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/icestorm.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ij.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ini4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/java-getopt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/java-image-scaling.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jaxrpc-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jcommon.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jfreechart.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jhdf5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/JHotDraw.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jna.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/joda-time.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/JWlz.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/jxrlib-all.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/kryo.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/metadata-extractor.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/metakit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/minlog.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/model-psql.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/native-lib-loader.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/netcdf.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/objenesis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-codecs.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-jai.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-mdbtools.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-poi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ome-xml.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/perf4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/platform.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/poi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/serializer.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/slf4j-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/specification.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/swing-worker.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/swingx.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/TableLayout.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/turbojpeg.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/xalan.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/xercesImpl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/xmpcore.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/imagej-omero-0.4.2-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
