@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="../icons/default.png" type="Manipulator">
+	<name>Read Omero Table</name>
+
+	<shortDescription>Reads a table from an OMERO Server</shortDescription>
+
+	<fullDescription>
+		<intro>
+			This node allows you to read a table from an OMERO Server.
+		</intro>
+
+		<tab name="Options">
+			<option name="Table ID">
+				The TableID of the table to download.
+			</option>
+		</tab>
+	</fullDescription>
+
+	<ports>
+		<inPort name="Connection Information" index="0">
+			Connection Information to the server (from OMERO Connection node).
+		</inPort>
+		<outPort name="Table Read from OMERO" index="0">
+			The Table containing the data read from the OMERO Server.
+		</outPort>
+	</ports>
+</knimeNode>

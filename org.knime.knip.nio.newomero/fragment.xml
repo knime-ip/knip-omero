@@ -7,6 +7,10 @@
             deprecated="false"
             factory-class="org.knime.knip.nio.newomero.nodes.connection.OmeroConnectionInfoNodeFactory">
       </node>
+      <node
+            deprecated="false"
+            factory-class="org.knime.knip.nio.newomero.nodes.tablereader.OmeroTableReaderNodeFactory">
+      </node>
    </extension>
    <extension
          point="org.knime.base.filehandling.RemoteFileHandler">
