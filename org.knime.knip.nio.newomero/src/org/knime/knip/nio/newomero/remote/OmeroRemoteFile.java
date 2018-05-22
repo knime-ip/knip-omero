@@ -103,7 +103,7 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
             return name;
         }
         // name (Type)
-        return MessageFormat.format("{0} ({1}; id:{2})", name,
+        return MessageFormat.format("{0} ({1}; id:{2,number,#})", name,
                 OmeroUtils.capitalize(type.toString()), id);
     }
 
@@ -112,13 +112,13 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
         String format = "";
         switch (type) {
         case IMAGE:
-            format = "/image/{0}";
+            format = "/image/{0,number,#}";
             break;
         case DATASET:
-            format = "/dataset/{0}";
+            format = "/dataset/{0,number,#}";
             break;
         case PROJECT:
-            format = "/project/{0}";
+            format = "/project/{0,number,#}";
             break;
         case ROOT:
             return "/"; // only one root object
@@ -271,7 +271,7 @@ public class OmeroRemoteFile extends RemoteFile<OmeroConnection> {
             final ConnectionInformation info) {
         final OmeroConnectionInformation omeroInfo = (OmeroConnectionInformation) info;
         // ome://user@host:port/datatype/id
-        final String path = MessageFormat.format("/{0}/{1}", type.toString(), id);
+        final String path = MessageFormat.format("/{0}/{1,number,#}", type, id);
 
         URI uri = null;
         try {
