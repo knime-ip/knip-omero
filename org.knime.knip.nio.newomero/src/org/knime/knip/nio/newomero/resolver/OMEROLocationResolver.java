@@ -9,6 +9,7 @@ import net.imagej.omero.OMEROLocation;
 
 import org.knime.base.filehandling.remote.connectioninformation.port.ConnectionInformation;
 import org.knime.knip.nio.newomero.port.OmeroConnectionInformation;
+import org.knime.knip.nio.newomero.util.OmeroUtils;
 import org.knime.knip.nio.resolver.AuthAwareResolver;
 import org.scijava.io.location.AbstractLocationResolver;
 import org.scijava.io.location.Location;
@@ -35,12 +36,7 @@ public class OMEROLocationResolver extends AbstractLocationResolver implements A
 		}
 
 		final OmeroConnectionInformation omeroInfo = (OmeroConnectionInformation) info;
-
-		final OMEROCredentials creds = new OMEROCredentials();
-		creds.setUser(omeroInfo.getUser());
-		creds.setServer(omeroInfo.getHost());
-		creds.setPassword(omeroInfo.getPassword());
-		creds.setEncrypted(omeroInfo.getUseEncryption());
+		final OMEROCredentials creds = OmeroUtils.convertToOmeroCredetials(omeroInfo);
 
 		final String[] path = uri.getPath().split("/");
 		if (path.length != 3) {
