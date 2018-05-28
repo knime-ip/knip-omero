@@ -52,7 +52,7 @@ public class OmeroConnectionInformationPortObject extends ConnectionInformationP
     /**
      * Creates a port object with the given connection information.
      *
-     * @param connectionInformationPOS
+     * @param omeroConnectionPOS
      *            The spec wrapping the connection information.
      */
     public OmeroConnectionInformationPortObject(

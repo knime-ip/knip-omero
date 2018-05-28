@@ -64,25 +64,23 @@ public class OmeroTableReaderNodeModel extends NodeModel {
 
 	}
 
-	private void registerConverters(ExecutionContext exec) {
-		// register converter factories:
-
-		// IntArray
-		final JavaToDataCellConverter<Integer[]> con = converters
-				.getConverterFactories(Integer[].class, ListCell.getCollectionType(IntCell.TYPE)).iterator().next()
-				.create(exec);
-		converters.register(new SimpleJavaToDataCellConverterFactory<>(IntArray.class,
-				ListCell.getCollectionType(IntCell.TYPE), c -> con.convert(c.toArray(new Integer[c.size()]))));
-
-		// DoubleArray
-		// TODO Fill in
-
-	}
+//	private void registerConverters(ExecutionContext exec) {
+//		// register converter factories:
+//
+//		// IntArray
+//		final JavaToDataCellConverter<Integer[]> con = converters
+//				.getConverterFactories(Integer[].class, ListCell.getCollectionType(IntCell.TYPE)).iterator().next()
+//				.create(exec);
+//		converters.register(new SimpleJavaToDataCellConverterFactory<>(IntArray.class,
+//				ListCell.getCollectionType(IntCell.TYPE), c -> con.convert(c.toArray(new Integer[c.size()]))));
+//
+//		// DoubleArray
+//		// TODO Fill in
+//
+//	}
 
 	@Override
 	protected PortObject[] execute(final PortObject[] inObjects, final ExecutionContext exec) throws Exception {
-
-		registerConverters(exec);
 
 		// download the table
 		final OmeroConnectionInformation info = ((OmeroConnectionInformationPortObject) inObjects[0])
