@@ -13,60 +13,63 @@ import omero.log.SimpleLogger;
 
 public class OmeroConnection extends Connection {
 
-    private final LoginCredentials creds;
-    private final Gateway gateway;
-    private SecurityContext ctx;
+	private final LoginCredentials creds;
+	private final Gateway gateway;
+	private SecurityContext ctx;
 
-    public OmeroConnection(final ConnectionInformation info) {
-        gateway = new Gateway(new SimpleLogger()); // TODO Better logger
+	public OmeroConnection(final ConnectionInformation info) {
+		gateway = new Gateway(new SimpleLogger()); // TODO Better logger
 
-        final OmeroConnectionInformation oInfo = (OmeroConnectionInformation) info;
+		final OmeroConnectionInformation oInfo = (OmeroConnectionInformation) info;
 
-        creds = new LoginCredentials();
-        creds.getServer().setHostname(oInfo.getHost());
-        if (oInfo.getPort() > 0) {
-            creds.getServer().setPort(oInfo.getPort());
-        }
+		creds = new LoginCredentials();
+		creds.getServer().setHostname(oInfo.getHost());
+		if (oInfo.getPort() > 0) {
+			creds.getServer().setPort(oInfo.getPort());
+		}
 
-        creds.getUser().setUsername(oInfo.getUser());
-        creds.getUser().setPassword(oInfo.getPassword());
-        creds.setEncryption(oInfo.getUseEncryption());
-    }
+		creds.getUser().setUsername(oInfo.getUser());
+		creds.getUser().setPassword(oInfo.getPassword());
+		creds.setEncryption(oInfo.getUseEncryption());
+	}
 
-    @Override
-    public void open() throws Exception {
-        final ExperimenterData user = gateway.connect(creds);
-        ctx = new SecurityContext(user.getGroupId());
-    }
+	@Override
+	public void open() throws Exception {
+		final ExperimenterData user = gateway.connect(creds);
+		ctx = new SecurityContext(user.getGroupId());
+	}
 
-    @Override
-    public boolean isOpen() {
-        boolean connected;
-        try {
-            connected = gateway.isConnected() || gateway.isAlive(ctx);
-        } catch (final DSOutOfServiceException e) {
-            return false;
-        }
-        return connected;
-    }
+	@Override
+	public boolean isOpen() {
+		boolean connected;
+		if (ctx == null) {
+			return false;
+		}
+		try {
+			connected = gateway.isConnected() || gateway.isAlive(ctx);
+		} catch (final DSOutOfServiceException e) {
+			return false;
+		}
+		return connected;
+	}
 
-    @Override
-    public void close() throws Exception {
-        gateway.disconnect();
-    }
+	@Override
+	public void close() throws Exception {
+		gateway.disconnect();
+	}
 
-    /**
-     * @return the gateway used in this connection
-     */
-    public Gateway getGateway() {
-        return gateway;
-    }
+	/**
+	 * @return the gateway used in this connection
+	 */
+	public Gateway getGateway() {
+		return gateway;
+	}
 
-    /**
-     * @return the security context used in this connection
-     */
-    public SecurityContext getSecurtiyContext() {
-        return ctx;
-    }
+	/**
+	 * @return the security context used in this connection
+	 */
+	public SecurityContext getSecurtiyContext() {
+		return ctx;
+	}
 
 }

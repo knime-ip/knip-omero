@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/imagej-omero-0.5.1-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/activation.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/axis-wsdl4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/axis.jar"/>
@@ -22,7 +23,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/omero/grib.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/guava.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/httpmime.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/omero/ice.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/omero/ice.jar" sourcepath="/tmp/.org.sf.feeling.decompiler1527501339318/source/ice-3.6.4-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/icegrid.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/icestorm.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/ij.jar"/>
@@ -65,7 +66,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/omero/xalan.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/xercesImpl.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/omero/xmpcore.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/imagej-omero-0.4.2-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>

@@ -1,5 +1,5 @@
 
-package org.knime.knip.nio.newomero.nodes.tablereader;
+package org.knime.knip.nio.newomero.nodes.roiReader;
 
 import javax.swing.SwingUtilities;
 
@@ -18,16 +18,15 @@ import org.knime.knip.nio.newomero.remote.OmeroConnection;
 
 import omero.gateway.Gateway;
 import omero.gateway.SecurityContext;
+import omero.gateway.facility.ROIFacility;
 import omero.gateway.facility.TablesFacility;
 import omero.gateway.model.TableData;
 
-public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
+public class OmeroRoiReaderNodeDialog extends DefaultNodeSettingsPane {
 
-	private static final String CHECK_BUTTON_TXT = "Click 'Check' to see if the table id is valid";
+	protected static final NodeLogger LOGGER = NodeLogger.getLogger(OmeroRoiReaderNodeDialog.class);
 
-	protected static final NodeLogger LOGGER = NodeLogger.getLogger(OmeroTableReaderNodeDialog.class);
-
-	private final SettingsModelInteger m_tableIdModel = OmeroTableReaderNodeModel.createTableIdModel();
+	private final SettingsModelInteger m_imgIdModel = OmeroRoiReaderNodeModel.createImgIdModel();
 
 	private ConnectionInformation m_connectionInformation;
 
@@ -35,12 +34,12 @@ public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
 
 	private OmeroConnection connection;
 
-	public OmeroTableReaderNodeDialog() {
+	public OmeroRoiReaderNodeDialog() {
 
 		setHorizontalPlacement(true);
-		createNewGroup("Table Properties");
-		DialogComponentNumber diaC = new DialogComponentNumber(m_tableIdModel, "Table ID", 1,
-				createFlowVariableModel(m_tableIdModel));
+		createNewGroup("Image Properties");
+		DialogComponentNumber diaC = new DialogComponentNumber(m_imgIdModel, "Image ID", 1,
+				createFlowVariableModel(m_imgIdModel));
 		addDialogComponent(diaC);
 
 		final DialogComponentButton checkButton = new DialogComponentButton("Check");
@@ -48,13 +47,13 @@ public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
 		checkButton.addActionListener(e -> SwingUtilities.invokeLater(this::checkValidity));
 		setHorizontalPlacement(false);
 
-		statusText = new DialogComponentLabel(CHECK_BUTTON_TXT);
+		statusText = new DialogComponentLabel("Click 'Check' to see if the table id is valid");
 		addDialogComponent(statusText);
 	}
 
 	@Override
 	public void onOpen() {
-		statusText.setText(CHECK_BUTTON_TXT);
+		statusText.setText("Click 'Check' to see if the image id is valid");
 	}
 
 	/**
@@ -71,16 +70,17 @@ public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
 			}
 			final Gateway gw = connection.getGateway();
 			final SecurityContext ctx = connection.getSecurtiyContext();
-			final TablesFacility facility = gw.getFacility(TablesFacility.class);
+			final ROIFacility facility = gw.getFacility(ROIFacility.class);
+			int numRois = facility.getROICount(ctx, m_imgIdModel.getIntValue());
 
-			final TableData t = facility.getTableInfo(ctx, m_tableIdModel.getIntValue());
-			if (t != null) {
-				statusText.setText("Table " + m_tableIdModel.getIntValue() + " is valid, shape: " + t.getNumberOfRows()
-						+ " rows and " + t.getColumns().length + " columns!");
+			if (numRois > 0) {
+				statusText.setText("Found " + numRois + " rois attached to the image.");
+			} else {
+				statusText.setText("No rois are attached to the image!");
 			}
 
 		} catch (final Exception e) {
-			statusText.setText("Table: " + m_tableIdModel.getIntValue() + " was not found on the server!");
+			statusText.setText("Error communicating with the server: " + e.getMessage());
 		}
 	}
 

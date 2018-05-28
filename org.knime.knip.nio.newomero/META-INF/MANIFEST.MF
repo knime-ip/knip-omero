@@ -6,7 +6,7 @@ Fragment-Host: org.knime.knip.nio;bundle-version="1.6.1"
 Automatic-Module-Name: org.knime.knip.nio.newomero
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
- lib/imagej-omero-0.4.2-SNAPSHOT.jar,
+ lib/imagej-omero-0.5.1-SNAPSHOT.jar,
  lib/omero/activation.jar,
  lib/omero/axis-wsdl4j.jar,
  lib/omero/axis.jar,
