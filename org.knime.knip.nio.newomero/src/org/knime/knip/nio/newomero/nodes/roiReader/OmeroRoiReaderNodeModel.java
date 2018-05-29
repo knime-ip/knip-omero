@@ -18,9 +18,12 @@ import net.imglib2.roi.labeling.LabelingType;
 import net.imglib2.view.Views;
 
 import org.knime.core.data.DataColumnSpecCreator;
+import org.knime.core.data.DataRow;
+import org.knime.core.data.DataTable;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.DataTableSpecCreator;
 import org.knime.core.data.def.DefaultRow;
+import org.knime.core.data.uri.URIDataValue;
 import org.knime.core.node.BufferedDataContainer;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.CanceledExecutionException;
@@ -31,13 +34,13 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModel;
-import org.knime.core.node.defaultnodesettings.SettingsModelInteger;
-import org.knime.core.node.defaultnodesettings.SettingsModelIntegerBounded;
+import org.knime.core.node.defaultnodesettings.SettingsModelColumnName;
 import org.knime.core.node.port.PortObject;
 import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.node.port.PortType;
 import org.knime.knip.base.data.labeling.LabelingCell;
 import org.knime.knip.base.data.labeling.LabelingCellFactory;
+import org.knime.knip.base.node.NodeUtils;
 import org.knime.knip.core.KNIPGateway;
 import org.knime.knip.core.awt.labelingcolortable.DefaultLabelingColorTable;
 import org.knime.knip.core.data.img.DefaultLabelingMetadata;
@@ -49,15 +52,19 @@ import org.knime.knip.nio.newomero.util.OmeroUtils;
 import org.scijava.convert.ConvertService;
 import org.scijava.util.TreeNode;
 
+import omero.gateway.exception.DSAccessException;
+import omero.gateway.exception.DSOutOfServiceException;
 import omero.gateway.model.ImageData;
 import omero.gateway.model.PixelsData;
-import omero.gateway.model.ROIData;
 
 public class OmeroRoiReaderNodeModel extends NodeModel {
 
+	private static final int CONNECTION = 0;
+	private static final int DATA = 1;
+
 	private final List<SettingsModel> m_settingsModels = new ArrayList<>();
 
-	private final SettingsModelInteger m_imageIdModel = OmeroRoiReaderNodeModel.createImgIdModel();
+	private final SettingsModelColumnName m_columnModel = OmeroRoiReaderNodeModel.createColumnModel();
 
 	private final OMEROService m_omeroService = NIOGateway.getService(OMEROService.class);
 	private final OMEROSessionService m_sessions = NIOGateway.getService(OMEROSessionService.class);
@@ -65,10 +72,11 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 	private final ConvertService m_converter = null;
 
 	protected OmeroRoiReaderNodeModel() {
-		super(new PortType[] { OmeroConnectionInformationPortObject.TYPE }, new PortType[] { BufferedDataTable.TYPE });
+		super(new PortType[] { OmeroConnectionInformationPortObject.TYPE, BufferedDataTable.TYPE },
+				new PortType[] { BufferedDataTable.TYPE });
 
 		// store settings models
-		m_settingsModels.add(m_imageIdModel);
+		m_settingsModels.add(m_columnModel);
 
 	}
 
@@ -76,31 +84,65 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 
 	protected PortObject[] execute(final PortObject[] inObjects, final ExecutionContext exec) throws Exception {
 
-		// download the table
 		final OmeroConnectionInformation info = ((OmeroConnectionInformationPortObject) inObjects[0])
 				.getOmeroConnectionInformation();
 		final OMEROCredentials creds = OmeroUtils.convertToOmeroCredetials(info);
 
-		final ROITree roitree = m_omeroService.downloadROIs(creds, m_imageIdModel.getIntValue());
+		final BufferedDataContainer container = exec.createDataContainer(createSpec());
+		final LabelingCellFactory factory = new LabelingCellFactory(exec);
 
-		final List<TmpLabeling> masks = new ArrayList<>();
+		final DataTable dataTable = (DataTable) inObjects[DATA];
 
+		final int uriCellIdx = NodeUtils.autoColumnSelection(dataTable.getDataTableSpec(), m_columnModel,
+				URIDataValue.class, OmeroRoiReaderNodeModel.class);
+
+		// read rois
+
+		for (final DataRow row : dataTable) {
+			exec.checkCanceled();
+			
+			final URIDataValue uri = (URIDataValue) row.getCell(uriCellIdx);
+			final String[] elems = uri.getURIContent().getURI().getPath().split("/");
+			if (elems.length != 3) {
+				throw new IllegalArgumentException("Invalid path at row: " + row.getKey());
+			}
+
+			final long id = Long.parseLong(elems[2]);
+
+			final LabelingCell<String> cell = readRoi(id, creds, factory);
+			container.addRowToTable(new DefaultRow(row.getKey(), cell));
+
+		}
+
+		// create output rows
+
+		container.close();
+		return new PortObject[] { container.getTable() };
+
+	}
+
+	private LabelingCell<String> readRoi(final long id, final OMEROCredentials creds, final LabelingCellFactory factory)
+			throws IOException, DSOutOfServiceException, DSAccessException {
+
+		// download ROI
+		final ROITree roitree = m_omeroService.downloadROIs(creds, id);
 		final OMEROSession session = m_sessions.getSession(creds);
-		
-		
-		final ImageData image = session.browse().getImage(session.getSecurityContext(), m_imageIdModel.getIntValue());
+
+		final ImageData image = session.browse().getImage(session.getSecurityContext(), id);
 		final PixelsData defaultPixels = image.getDefaultPixels();
 
+		// get the dimensions of the original image
 		final long sizeX = defaultPixels.getSizeX();
 		final long sizeY = defaultPixels.getSizeY();
 		final long sizeZ = defaultPixels.getSizeZ();
 		final long sizeT = defaultPixels.getSizeT();
 		final long sizeC = defaultPixels.getSizeC();
 
+		final List<TmpLabeling> masks = new ArrayList<>();
 		final List<TreeNode<?>> children = roitree.children();
 		for (final TreeNode<?> c : children) {
 			final List<TreeNode<?>> c2 = c.children();
-			for (TreeNode<?> o : c2) {
+			for (final TreeNode<?> o : c2) {
 				masks.add(new TmpLabeling((OMERORealMask) o.data()));
 			}
 		}
@@ -115,25 +157,18 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 			c.next();
 			for (final TmpLabeling m : masks) {
 				if (m.getMask().test(c)) {
-					// add the label here
-					final LabelingType<String> s = c.get();
-					s.add(m.getId() + ":" + m.getLabel());
+					String label = "" + m.getId();
+					if (!m.getLabel().equals("")) {
+						label += ":" + m.getLabel();
+					}
+					c.get().add(label);
 				}
 			}
 
 		}
+		final LabelingMetadata m = new DefaultLabelingMetadata(res.numDimensions(), new DefaultLabelingColorTable());
+		return factory.createCell(res, m);
 
-		final LabelingMetadata m = new DefaultLabelingMetadata(5, new DefaultLabelingColorTable());
-
-		final LabelingCellFactory factory = new LabelingCellFactory(exec);
-		final LabelingCell<String> cell = factory.createCell(res, m);
-
-		// create output rows
-		final BufferedDataContainer container = exec.createDataContainer(createSpec());
-
-		container.addRowToTable(new DefaultRow("Row_0", cell));
-		container.close();
-		return new PortObject[] { container.getTable() };
 	}
 
 	private DataTableSpec createSpec() {
@@ -187,7 +222,7 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 		// not needed
 	}
 
-	public static SettingsModelIntegerBounded createImgIdModel() {
-		return new SettingsModelIntegerBounded("Image ID", 0, 0, Integer.MAX_VALUE);
+	static SettingsModelColumnName createColumnModel() {
+		return new SettingsModelColumnName("Image URIs", "");
 	}
 }

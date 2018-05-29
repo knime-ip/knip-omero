@@ -23,8 +23,12 @@
 			Connection
 			Information to the server (from OMERO Connection node).
 		</inPort>
+		<inPort name="Connection Information" index="1">
+			Image URIs
+		</inPort>
 		<outPort name="ROIS read from OMERO" index="0">
-			The ROIs read from the OMERO Server.
+			The ROIs read from
+			the OMERO Server.
 		</outPort>
 	</ports>
 </knimeNode>
