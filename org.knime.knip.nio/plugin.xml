@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+     <extension
+           point="org.knime.workbench.repository.nodesets">
+        <nodeset
+              expert-flag="false"
+              factory-class="org.knime.knip.nio.nodes.NIONodeSetFactory"
+              id="org.knime.knip.io.nodes.NIONodeSetFactory">
+        </nodeset>
+     </extension>
+     <extension
+           point="org.knime.workbench.repository.nodes">
+        <node
+              deprecated="false"
+              factory-class="org.knime.knip.nio.omero.nodes.connection.OmeroConnectionInfoNodeFactory">
+        </node>
+     </extension>
+     <extension
+           point="org.knime.core.PortType">
+        <portType
+              hidden="false"
+              name="OMERO Connection Information Port"
+              objectClass="org.knime.knip.nio.omero.port.OmeroConnectionInformationPortObject"
+              objectSerializer="org.knime.knip.nio.omero.port.OmeroConnectionInformationPortObject$Serializer"
+              specClass="org.knime.knip.nio.omero.port.OmeroConnectionInformationPortObjectSpec"
+              specSerializer="org.knime.knip.nio.omero.port.OmeroConnectionInformationPortObjectSpec$Serializer">
+        </portType>
+     </extension>
+     <extension
+           point="org.knime.base.filehandling.RemoteFileHandler">
+        <RemoteFileHandler
+              RemoteFileHandler="org.knime.knip.nio.omero.remote.OmeroFileHandler">
+        </RemoteFileHandler>
+     </extension>
+</plugin>
