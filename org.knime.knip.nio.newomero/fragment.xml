@@ -4,14 +4,17 @@
    <extension
          point="org.knime.workbench.repository.nodes">
       <node
+            category-path="/community/knip/io/omero"
             deprecated="false"
             factory-class="org.knime.knip.nio.newomero.nodes.connection.OmeroConnectionInfoNodeFactory">
       </node>
       <node
+            category-path="/community/knip/io/omero"
             deprecated="false"
             factory-class="org.knime.knip.nio.newomero.nodes.tablereader.OmeroTableReaderNodeFactory">
       </node>
       <node
+            category-path="/community/knip/io/omero"
             deprecated="false"
             factory-class="org.knime.knip.nio.newomero.nodes.roiReader.OmeroRoiReaderNodeFactory">
       </node>
@@ -32,5 +35,15 @@
             specClass="org.knime.knip.nio.newomero.port.OmeroConnectionInformationPortObjectSpec"
             specSerializer="org.knime.knip.nio.newomero.port.OmeroConnectionInformationPortObjectSpec$Serializer">
       </portType>
+   </extension>
+      <extension
+         point="org.knime.workbench.repository.categories">
+      <category
+            icon="src/org/knime/knip/nio/newomero/nodes/icons/default.png"
+            level-id="omero"
+            locked="true"
+            name="OMERO"
+            path="/community/knip/io">
+      </category>
    </extension>
 </fragment>
