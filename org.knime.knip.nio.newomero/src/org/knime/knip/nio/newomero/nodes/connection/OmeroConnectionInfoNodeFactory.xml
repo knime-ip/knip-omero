@@ -14,37 +14,47 @@
 			used to connect to an OMERO server.
 		</intro>
 
-		<option name="Host">
-			Address of the server.
-		</option>
-		<option name="Port">
-			Port of the omero server.
-		</option>
-		<option name="Authentication">
-			Method of authentication.
-			<b>Password</b>
-			<br />
-			Use username and password to authenticate.
-		</option>
-		<option name="Workflow credentials">
-			Use workflow credentials to determine user
-			and
-			password.
-		</option>
-		<option name="User">
-			Name of the user.
-		</option>
-		<option name="Password">
-			Password of the user
-		</option>
-		<option name="Test connection">
-			Open dialog that test the current connection.
-		</option>
+		<tab name="Server">
+			<option name="Hostname">
+				Address of the server.
+			</option>
+			<option name="Port">
+				Port of the omero server.
+			</option>
+			<option name="Encrypted Connection">
+				Whether the connection to the server is encrypted
+				(recommended).
+			</option>
+		</tab>
+		<tab name="Workflow Credentials">
+			<option name="Use Workflow credentials">
+				Check to use workflow credentials instead of a
+				manually entered credentials.
+			</option>
+			<option name="Credentials">
+				The workflow credentials to use for
+				authentication.
+			</option>
+		</tab>
+		<tab name="Manual Credentials">
+			<option name="Username">
+				The username to use.
+			</option>
+			<option name="Password">
+				The password to use.
+			</option>
+		</tab>
+		<tab name="Test Connection">
+			<option name="">
+				Opens dialog that tests the current connection.
+			</option>
+		</tab>
 	</fullDescription>
 
 	<ports>
 		<outPort name="Connection information port" index="0">
-			Port object containing the information needed to establish a connection.
+			Port object
+			containing the information needed to establish a connection.
 		</outPort>
 	</ports>
 </knimeNode>

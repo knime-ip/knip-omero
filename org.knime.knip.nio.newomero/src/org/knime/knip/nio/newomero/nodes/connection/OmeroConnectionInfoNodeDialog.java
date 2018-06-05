@@ -53,7 +53,7 @@ public class OmeroConnectionInfoNodeDialog extends DefaultNodeSettingsPane {
         createNewGroup("Server");
         addDialogComponent(new DialogComponentString(hostnameModel, "Hostname", true, 40));
         setHorizontalPlacement(true);
-        addDialogComponent(new DialogComponentNumber(portModel, "port", 1));
+        addDialogComponent(new DialogComponentNumber(portModel, "Port", 1));
         addDialogComponent(new DialogComponentBoolean(encryptModel, "Encrypted Connection"));
         setHorizontalPlacement(false);
         closeCurrentGroup();
@@ -76,9 +76,9 @@ public class OmeroConnectionInfoNodeDialog extends DefaultNodeSettingsPane {
         addDialogComponent(credentialsComponent);
         errorLabel = new DialogComponentLabel("");
 
-        createNewGroup("Manual Credentials");
-        addDialogComponent(new DialogComponentString(usernameModel, "username", true, 15));
-        addDialogComponent(new DialogComponentPasswordField(passwordModel, "password"));
+        createNewGroup("Manual credentials");
+        addDialogComponent(new DialogComponentString(usernameModel, "Username", true, 15));
+        addDialogComponent(new DialogComponentPasswordField(passwordModel, "Password"));
         closeCurrentGroup();
 
         createNewGroup("");
