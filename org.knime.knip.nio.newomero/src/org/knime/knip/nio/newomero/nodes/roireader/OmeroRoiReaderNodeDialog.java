@@ -1,5 +1,5 @@
 
-package org.knime.knip.nio.newomero.nodes.roiReader;
+package org.knime.knip.nio.newomero.nodes.roireader;
 
 import org.knime.core.data.uri.URIDataValue;
 import org.knime.core.node.NodeLogger;

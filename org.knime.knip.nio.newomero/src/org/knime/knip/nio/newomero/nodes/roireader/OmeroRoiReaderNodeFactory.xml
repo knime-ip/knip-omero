@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
 <knimeNode icon="../icons/default.png" type="Manipulator">
-	<name>Read OMERO ROI</name>
+	<name>OMERO Labeling Reader</name>
 
-	<shortDescription>Reads all the ROIs of an image from an OMERO Server</shortDescription>
+	<shortDescription>Reads all the ROIs of an image from an OMERO Server and converts them into a Labeling</shortDescription>
 
 	<fullDescription>
 		<intro>
-			This node allows you to read the ROIs attached to an image from an OMERO Server.
+			This node allows you to read the ROIs attached to an image from
+			an OMERO Server as a labeling.
 		</intro>
 
 		<tab name="Options">
 			<option name="Image ID">
 				The ImageID of the image from which the attached
-				rois will be read.
+				ROIs will be read.
 			</option>
 		</tab>
 	</fullDescription>
 
 	<ports>
 		<inPort name="Connection Information" index="0">
-			Connection
-			Information to the server (from OMERO Connection node).
+			Connection information for an OMERO server (from OMERO Connection node).
 		</inPort>
 		<inPort name="Connection Information" index="1">
 			Image URIs

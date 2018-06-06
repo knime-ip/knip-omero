@@ -1,4 +1,4 @@
-package org.knime.knip.nio.newomero.nodes.roiReader;
+package org.knime.knip.nio.newomero.nodes.roireader;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,8 +69,6 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 	private final OMEROService m_omeroService = NIOGateway.getService(OMEROService.class);
 	private final OMEROSessionService m_sessions = NIOGateway.getService(OMEROSessionService.class);
 
-	private final ConvertService m_converter = null;
-
 	protected OmeroRoiReaderNodeModel() {
 		super(new PortType[] { OmeroConnectionInformationPortObject.TYPE, BufferedDataTable.TYPE },
 				new PortType[] { BufferedDataTable.TYPE });
@@ -84,7 +82,7 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 
 	protected PortObject[] execute(final PortObject[] inObjects, final ExecutionContext exec) throws Exception {
 
-		final OmeroConnectionInformation info = ((OmeroConnectionInformationPortObject) inObjects[0])
+		final OmeroConnectionInformation info = ((OmeroConnectionInformationPortObject) inObjects[CONNECTION])
 				.getOmeroConnectionInformation();
 		final OMEROCredentials creds = OmeroUtils.convertToOmeroCredetials(info);
 

@@ -1,4 +1,4 @@
-package org.knime.knip.nio.newomero.nodes.roiReader;
+package org.knime.knip.nio.newomero.nodes.roireader;
 
 import net.imagej.omero.roi.OMERORealMask;
 
@@ -12,6 +12,11 @@ import omero.gateway.model.RectangleData;
 import omero.gateway.model.ShapeData;
 import omero.gateway.model.TextData;
 
+/**
+ * Wrapper class for {@link OMERORealMask}, that allows easy access to the
+ * label.
+ *
+ */
 public class TmpLabeling {
 
 	private OMERORealMask mask;

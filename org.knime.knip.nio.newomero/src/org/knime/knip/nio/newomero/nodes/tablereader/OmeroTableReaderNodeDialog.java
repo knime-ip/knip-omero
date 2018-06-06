@@ -23,7 +23,7 @@ import omero.gateway.model.TableData;
 
 public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
 
-	private static final String CHECK_BUTTON_TXT = "Click 'Check' to see if the table id is valid";
+	private static final String CHECK_BUTTON_TXT = "Click 'Check' to see if the table ID is valid.";
 
 	protected static final NodeLogger LOGGER = NodeLogger.getLogger(OmeroTableReaderNodeDialog.class);
 
@@ -89,7 +89,7 @@ public class OmeroTableReaderNodeDialog extends DefaultNodeSettingsPane {
 			throws NotConfigurableException {
 
 		if (specs[0] == null) {
-			throw new NotConfigurableException("A connection is required!");
+			throw new NotConfigurableException("A connection is required, but not available!");
 		}
 
 		final OmeroConnectionInformationPortObjectSpec object = (OmeroConnectionInformationPortObjectSpec) specs[0];
