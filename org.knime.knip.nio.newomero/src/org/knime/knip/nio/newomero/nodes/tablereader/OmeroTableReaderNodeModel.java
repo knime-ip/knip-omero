@@ -18,7 +18,6 @@ import org.knime.core.data.DataType;
 import org.knime.core.data.collection.ListCell;
 import org.knime.core.data.convert.datacell.JavaToDataCellConverter;
 import org.knime.core.data.convert.datacell.JavaToDataCellConverterRegistry;
-import org.knime.core.data.convert.datacell.SimpleJavaToDataCellConverterFactory;
 import org.knime.core.data.def.BooleanCell;
 import org.knime.core.data.def.DefaultRow;
 import org.knime.core.data.def.DoubleCell;
@@ -44,6 +43,8 @@ import org.knime.knip.nio.NIOGateway;
 import org.knime.knip.nio.newomero.port.OmeroConnectionInformation;
 import org.knime.knip.nio.newomero.port.OmeroConnectionInformationPortObject;
 import org.knime.knip.nio.newomero.util.OmeroUtils;
+import org.scijava.util.DoubleArray;
+import org.scijava.util.FloatArray;
 import org.scijava.util.IntArray;
 
 public class OmeroTableReaderNodeModel extends NodeModel {
@@ -64,21 +65,6 @@ public class OmeroTableReaderNodeModel extends NodeModel {
 
 	}
 
-//	private void registerConverters(ExecutionContext exec) {
-//		// register converter factories:
-//
-//		// IntArray
-//		final JavaToDataCellConverter<Integer[]> con = converters
-//				.getConverterFactories(Integer[].class, ListCell.getCollectionType(IntCell.TYPE)).iterator().next()
-//				.create(exec);
-//		converters.register(new SimpleJavaToDataCellConverterFactory<>(IntArray.class,
-//				ListCell.getCollectionType(IntCell.TYPE), c -> con.convert(c.toArray(new Integer[c.size()]))));
-//
-//		// DoubleArray
-//		// TODO Fill in
-//
-//	}
-
 	@Override
 	protected PortObject[] execute(final PortObject[] inObjects, final ExecutionContext exec) throws Exception {
 
@@ -86,7 +72,7 @@ public class OmeroTableReaderNodeModel extends NodeModel {
 		final OmeroConnectionInformation info = ((OmeroConnectionInformationPortObject) inObjects[0])
 				.getOmeroConnectionInformation();
 		final OMEROCredentials creds = OmeroUtils.convertToOmeroCredetials(info);
-
+ 
 		final Table<?, ?> table;
 		try {
 			table = m_omeroService.downloadTable(creds, m_tableIdModel.getIntValue());
@@ -146,6 +132,8 @@ public class OmeroTableReaderNodeModel extends NodeModel {
 			outType = StringCell.TYPE;
 		} else if (type.equals(IntArray.class)) {
 			outType = ListCell.getCollectionType(IntCell.TYPE);
+		} else if (type.equals(DoubleArray.class)) {
+			outType = ListCell.getCollectionType(DoubleCell.TYPE);
 		} // TODO Add other array types
 
 		else {
