@@ -72,7 +72,8 @@ Bundle-ClassPath: .,
  lib/omero/xalan.jar,
  lib/omero/xercesImpl.jar,
  lib/omero/xmpcore.jar
-Require-Bundle: org.apache.commons.lang;bundle-version="2.6.0"
+Require-Bundle: org.apache.commons.lang;bundle-version="2.6.0",
+ imglib2-realtransform;bundle-version="2.0.0"
 Export-Package: net.imagej.omero,
  org.knime.knip.nio.newomero.nodes.connection,
  org.knime.knip.nio.newomero.nodes.foldercreator,
