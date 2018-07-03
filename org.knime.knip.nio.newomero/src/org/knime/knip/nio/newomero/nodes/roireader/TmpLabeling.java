@@ -1,6 +1,7 @@
 package org.knime.knip.nio.newomero.nodes.roireader;
 
 import net.imagej.omero.roi.OMERORealMask;
+import net.imagej.omero.roi.OMERORealMaskRealInterval;
 
 import omero.gateway.model.EllipseData;
 import omero.gateway.model.LineData;
@@ -19,9 +20,9 @@ import omero.gateway.model.TextData;
  */
 public class TmpLabeling {
 
-	private OMERORealMask mask;
+	private OMERORealMaskRealInterval mask;
 
-	public OMERORealMask getMask() {
+	public OMERORealMaskRealInterval getMask() {
 		return mask;
 	}
 
@@ -36,7 +37,7 @@ public class TmpLabeling {
 	private String label;
 	private long id;
 
-	public TmpLabeling(OMERORealMask mask) {
+	public TmpLabeling(OMERORealMaskRealInterval mask) {
 		this.mask = mask;
 
 		final ShapeData shape = mask.getShape();
@@ -71,5 +72,4 @@ public class TmpLabeling {
 		}
 		throw new IllegalArgumentException();
 	}
-
 }

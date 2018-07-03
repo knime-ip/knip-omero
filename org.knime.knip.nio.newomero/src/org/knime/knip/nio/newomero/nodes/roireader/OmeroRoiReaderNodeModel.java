@@ -9,12 +9,16 @@ import net.imagej.omero.OMEROCredentials;
 import net.imagej.omero.OMEROService;
 import net.imagej.omero.OMEROSession;
 import net.imagej.omero.OMEROSessionService;
-import net.imagej.omero.roi.OMERORealMask;
+import net.imagej.omero.roi.OMERORealMaskRealInterval;
 import net.imagej.roi.ROITree;
 import net.imglib2.Cursor;
 import net.imglib2.FinalInterval;
+import net.imglib2.RandomAccess;
 import net.imglib2.RandomAccessibleInterval;
+import net.imglib2.roi.Masks;
+import net.imglib2.roi.Regions;
 import net.imglib2.roi.labeling.LabelingType;
+import net.imglib2.util.Intervals;
 import net.imglib2.view.Views;
 
 import org.knime.core.data.DataColumnSpecCreator;
@@ -49,7 +53,6 @@ import org.knime.knip.nio.NIOGateway;
 import org.knime.knip.nio.newomero.port.OmeroConnectionInformation;
 import org.knime.knip.nio.newomero.port.OmeroConnectionInformationPortObject;
 import org.knime.knip.nio.newomero.util.OmeroUtils;
-import org.scijava.convert.ConvertService;
 import org.scijava.util.TreeNode;
 
 import omero.gateway.exception.DSAccessException;
@@ -98,7 +101,6 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 
 		for (final DataRow row : dataTable) {
 			exec.checkCanceled();
-			
 			final URIDataValue uri = (URIDataValue) row.getCell(uriCellIdx);
 			final String[] elems = uri.getURIContent().getURI().getPath().split("/");
 			if (elems.length != 3) {
@@ -106,10 +108,8 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 			}
 
 			final long id = Long.parseLong(elems[2]);
-
 			final LabelingCell<String> cell = readRoi(id, creds, factory);
 			container.addRowToTable(new DefaultRow(row.getKey(), cell));
-
 		}
 
 		// create output rows
@@ -141,7 +141,7 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 		for (final TreeNode<?> c : children) {
 			final List<TreeNode<?>> c2 = c.children();
 			for (final TreeNode<?> o : c2) {
-				masks.add(new TmpLabeling((OMERORealMask) o.data()));
+				masks.add(new TmpLabeling((OMERORealMaskRealInterval) o.data()));
 			}
 		}
 
@@ -149,21 +149,25 @@ public class OmeroRoiReaderNodeModel extends NodeModel {
 		final RandomAccessibleInterval<LabelingType<String>> res = Views
 				.dropSingletonDimensions(KNIPGateway.ops().create().imgLabeling(new FinalInterval(dims)));
 
-		final Cursor<LabelingType<String>> c = Views.iterable(res).localizingCursor();
+		final RandomAccess<LabelingType<String>> ra = res.randomAccess();
 
-		while (c.hasNext()) {
-			c.next();
-			for (final TmpLabeling m : masks) {
-				if (m.getMask().test(c)) {
-					String label = "" + m.getId();
-					if (!m.getLabel().equals("")) {
-						label += ":" + m.getLabel();
-					}
-					c.get().add(label);
-				}
+		for (final TmpLabeling m : masks) {
+			final OMERORealMaskRealInterval maskInterval = m.getMask();
+			final String label = m.getId() + " : " + m.getLabel();
+
+			final Cursor<Void> c = Regions
+					.iterable(Views.interval(Views.raster(Masks.toRealRandomAccessibleRealInterval(maskInterval)),
+							Intervals.smallestContainingInterval(maskInterval)))
+					.localizingCursor();
+			final int[] position = new int[res.numDimensions()];
+			while (c.hasNext()) {
+				c.next();
+				c.localize(position);
+				ra.setPosition(position);
+				ra.get().add(label);
 			}
-
 		}
+
 		final LabelingMetadata m = new DefaultLabelingMetadata(res.numDimensions(), new DefaultLabelingColorTable());
 		return factory.createCell(res, m);
 
