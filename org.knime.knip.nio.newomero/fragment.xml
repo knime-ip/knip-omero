@@ -46,10 +46,4 @@
             path="/community/knip/io">
       </category>
    </extension>
-      <extension
-            point="org.knime.core.JavaToDataCellConverter">
-         <JavaToDataCellConverter
-               factoryClass="org.knime.knip.nio.newomero.nodes.tablereader.IntArrayConverter">
-         </JavaToDataCellConverter>
-      </extension>
 </fragment>
