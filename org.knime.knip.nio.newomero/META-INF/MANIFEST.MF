@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.knime.knip.nio.newomero;singleton:=true
+Bundle-SymbolicName: org.knime.knip.omero2;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Fragment-Host: org.knime.knip.nio;bundle-version="1.6.1"
-Automatic-Module-Name: org.knime.knip.nio.newomero
+Bundle-Name: KNIP OMERO integraion mk2
+Automatic-Module-Name: org.knime.knip.omero2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  lib/imagej-omero-0.5.1-SNAPSHOT.jar,
@@ -73,11 +73,23 @@ Bundle-ClassPath: .,
  lib/omero/xercesImpl.jar,
  lib/omero/xmpcore.jar
 Require-Bundle: org.apache.commons.lang;bundle-version="2.6.0",
- imglib2-realtransform;bundle-version="2.0.0"
+ imglib2-realtransform;bundle-version="2.0.0",
+ org.knime.knip.io2;bundle-version="1.6.1",
+ org.knime.knip.io2.libs;bundle-version="0.0.1",
+ org.knime.base;bundle-version="3.6.0",
+ org.knime.base.filehandling;bundle-version="3.6.0",
+ scijava-common;bundle-version="2.74.2",
+ imglib2;bundle-version="5.3.1",
+ imglib2-roi;bundle-version="0.5.1",
+ imagej-common;bundle-version="0.26.1",
+ org.knime.knip.base;bundle-version="1.6.1",
+ org.knime.knip.core;bundle-version="1.6.1",
+ org.knime.core.data.uritype;bundle-version="3.6.0",
+ imagej-ops;bundle-version="0.41.1"
 Export-Package: net.imagej.omero,
- org.knime.knip.nio.newomero.nodes.connection,
- org.knime.knip.nio.newomero.nodes.foldercreator,
- org.knime.knip.nio.newomero.port,
- org.knime.knip.nio.newomero.remote,
- org.knime.knip.nio.newomero.resolver,
- org.knime.knip.nio.newomero.util
+ org.knime.knip.omero2.nodes.connection,
+ org.knime.knip.omero2.nodes.foldercreator,
+ org.knime.knip.omero2.port,
+ org.knime.knip.omero2.remote,
+ org.knime.knip.omero2.resolver,
+ org.knime.knip.omero2.util
