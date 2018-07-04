@@ -18,6 +18,7 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="/community/knip/io/other"
+            deprecated="true"
             factory-class="org.knime.knip.omero.OmeroReaderNodeFactory"
             id="org.knime.knip.omero.OmeroConnectorNodeFactory"/>
    </extension>
