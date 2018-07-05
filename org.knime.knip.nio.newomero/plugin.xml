@@ -58,4 +58,13 @@
                LocationResolver="org.knime.knip.omero2.resolver.OMEROLocationResolver">
          </LocationResolver>
       </extension>
+      <extension
+            point="org.knime.knip.io2.ScijavaService">
+         <ScijavaService
+               ScijavaService="net.imagej.omero.DefaultOMEROSessionService">
+         </ScijavaService>
+         <ScijavaService
+               ScijavaService="net.imagej.omero.DefaultOMEROService">
+         </ScijavaService>
+      </extension>
 </plugin>
