@@ -47,24 +47,18 @@
       </category>
    </extension>
       <extension
-            point="org.knime.knip.io2.ScifioFormat">
-         <ScifioFormat
-               ScifioFormat="net.imagej.omero.OMEROFormat">
-         </ScifioFormat>
-      </extension>
-      <extension
-            point="org.knime.knip.io2.LocationResolver">
-         <LocationResolver
-               LocationResolver="org.knime.knip.omero2.resolver.OMEROLocationResolver">
-         </LocationResolver>
-      </extension>
-      <extension
-            point="org.knime.knip.io2.ScijavaService">
-         <ScijavaService
-               ScijavaService="net.imagej.omero.DefaultOMEROSessionService">
-         </ScijavaService>
-         <ScijavaService
-               ScijavaService="net.imagej.omero.DefaultOMEROService">
-         </ScijavaService>
+            point="org.knime.knip.io2.SciJavaPlugin">
+         <SciJavaPlugin
+               SciJavaPlugin="net.imagej.omero.OMEROFormat">
+         </SciJavaPlugin>
+         <SciJavaPlugin
+               SciJavaPlugin="org.knime.knip.omero2.resolver.OMEROLocationResolver">
+         </SciJavaPlugin>
+         <SciJavaPlugin
+               SciJavaPlugin="net.imagej.omero.DefaultOMEROSessionService">
+         </SciJavaPlugin>
+         <SciJavaPlugin
+               SciJavaPlugin="net.imagej.omero.DefaultOMEROService">
+         </SciJavaPlugin>
       </extension>
 </plugin>
