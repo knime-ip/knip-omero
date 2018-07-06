@@ -39,7 +39,7 @@
       <extension
          point="org.knime.workbench.repository.categories">
       <category
-            icon="src/org/knime/knip/omero2/nodes/icons/default.png"
+            icon="icons/omero.png"
             level-id="omero"
             locked="true"
             name="OMERO"
