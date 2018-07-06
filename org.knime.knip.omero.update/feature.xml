@@ -2,7 +2,7 @@
 <feature
       id="org.knime.knip.omero.update"
       label="KNIP Update Site"
-      version="0.10.1.qualifier">
+      version="0.20.1.qualifier">
 
    <includes
          id="org.knime.knip.omero.feature"
