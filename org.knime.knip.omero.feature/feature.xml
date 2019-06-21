@@ -2,7 +2,7 @@
 <feature
       id="org.knime.knip.omero.feature"
       label="KNIME Image Processing - OMERO Integration"
-      version="0.10.1.qualifier"
+      version="0.11.0.qualifier"
       provider-name="KNIME / OME">
 
    <description>
