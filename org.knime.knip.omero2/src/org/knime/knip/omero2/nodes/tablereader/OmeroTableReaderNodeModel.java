@@ -7,8 +7,8 @@ import java.util.List;
 
 import net.imagej.omero.OMEROCredentials;
 import net.imagej.omero.OMEROService;
-import net.imagej.table.Column;
-import net.imagej.table.Table;
+import org.scijava.table.Column;
+import org.scijava.table.Table;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
