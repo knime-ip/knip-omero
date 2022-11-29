@@ -6,7 +6,7 @@ Bundle-Version: 0.11.0.qualifier
 Bundle-ClassPath: omeroconnector.jar
 Bundle-Activator: org.knime.knip.omero.OmeroReaderNodePlugin
 Bundle-Vendor: 
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.0.0,4.0.0)",
  org.knime.knip.omero.libs;bundle-version="0.8.2",
  org.knime.workbench.core;bundle-version="[3.0.0,5.0.0)",
  org.knime.workbench.repository;bundle-version="[3.0.0,5.0.0)",
